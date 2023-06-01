@@ -11,8 +11,16 @@ namespace RainOverhaul.Content {
         private float Intensity;
         private float RainTransition;
         private float Extra;
+        private float worldFactorY;
 
         public override void PreUpdateTime() {
+
+            if(Main.maxTilesX == 4200)
+            worldFactorY = 4400f;
+            else if(Main.maxTilesX == 6400)
+            worldFactorY = 6600f;
+            else if(Main.maxTilesX == 8400)
+            worldFactorY = 8800f;
 
             // RAIN FILTER
 
@@ -26,7 +34,7 @@ namespace RainOverhaul.Content {
 
                 if(Main.raining && !WallCollision && 
                 !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow && 
-                !Main.LocalPlayer.ZoneNormalSpace && Main.LocalPlayer.position.Y < 5430f) 
+                !Main.LocalPlayer.ZoneNormalSpace && Main.LocalPlayer.position.Y < worldFactorY) 
                 {
 
                     RainTransition+=0.01f;

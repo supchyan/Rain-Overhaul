@@ -2,3 +2,4 @@ Atmospheric mod, that designed to make terraria more attractive.
 [c/536381:Enjoy the new rain]
 
 1.4.4 compatibility - sure.
+Multiplayer - yes.
