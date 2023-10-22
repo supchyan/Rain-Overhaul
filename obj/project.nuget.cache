@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "HMp4HdXZS/ys7Mk7g0SI348TymVIABXevKPSRdEi7VJANiPI6ZTRO+xt393/NIUTLej/pjOf0opJ5sfMtHT87A==",
+  "success": true,
+  "projectFilePath": "/home/supchyan_/.local/share/Terraria/tModLoader/ModSources/RainOverhaul/RainOverhaul.csproj",
+  "expectedPackageFiles": [
+    "/home/supchyan_/.nuget/packages/tmodloader.codeassist/0.1.5/tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

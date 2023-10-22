@@ -1,0 +1,15 @@
+Mods: {
+	RainOverhaul: {
+		Configs: {
+			RainConfig: {
+				DisplayName: Rain Config
+
+				Intensity: {
+					Header: Rain Intensity
+					Label: Value
+					Tooltip: ""
+				}
+			}
+		}
+	}
+}
