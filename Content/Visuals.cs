@@ -60,7 +60,12 @@ namespace RainOverhaul.Content {
     }
     public class RainConfig:ModConfig {
 		public override ConfigScope Mode => ConfigScope.ClientSide;
+        // [BackgroundColor(255, 0, 255)]
 		[DefaultValue(1)]
+        [DrawTicks]
+        [Increment(0.25f)]
+        [Range(0f, 1f)]
+        [Header("RainIntensity")]
 		public float Intensity;
     }
 }

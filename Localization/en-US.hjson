@@ -5,10 +5,12 @@ Mods: {
 				DisplayName: Rain Config
 
 				Intensity: {
-					Header: Rain Intensity
+					Header: ""
 					Label: Value
 					Tooltip: ""
 				}
+
+				Headers.RainIntensity: Rain intensity
 			}
 		}
 	}
