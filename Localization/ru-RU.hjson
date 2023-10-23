@@ -4,7 +4,7 @@ Mods: {
 			RainConfig: {
 				DisplayName: Параметры дождя
 
-				Intensity: {
+				cIntensity: {
 					Header: ""
 					Label: Значение
 					Tooltip: ""
@@ -17,7 +17,7 @@ Mods: {
 				DisplayName: Дополнительные параметры дождя
 				Headers.RainWorldExactly: Дополнения
 
-				RainWorld: {
+				cRainWorld: {
 					Label: Режим Rain World
 					Tooltip:
 						'''

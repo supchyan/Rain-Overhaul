@@ -4,7 +4,7 @@ Mods: {
 			RainConfig: {
 				DisplayName: Rain Properties
 
-				Intensity: {
+				cIntensity: {
 					Header: ""
 					Label: Value
 					Tooltip: ""
@@ -17,7 +17,7 @@ Mods: {
 				DisplayName: More Rain Properties
 				Headers.RainWorldExactly: Additionals
 
-				RainWorld: {
+				cRainWorld: {
 					Label: Rain World Mode
 					Tooltip:
 						'''
