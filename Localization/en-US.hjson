@@ -2,7 +2,7 @@ Mods: {
 	RainOverhaul: {
 		Configs: {
 			RainConfig: {
-				DisplayName: Rain Config
+				DisplayName: Rain Properties
 
 				Intensity: {
 					Header: ""
@@ -12,6 +12,25 @@ Mods: {
 
 				Headers.RainIntensity: Rain intensity
 			}
+
+			RainConfigAdditions: {
+				DisplayName: More Rain Properties
+				Headers.RainWorldExactly: Additionals
+
+				RainWorld: {
+					Label: Rain World Mode
+					Tooltip:
+						'''
+						This switcher increases intensity of the rain to high values
+						making rain "heavy to stay alive". True "Rain World" experience!
+
+						[c/888888:Disables "{$RainConfig.Headers.RainIntensity}" parameter for everyone.]
+						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+						'''
+				}
+			}
 		}
+
+		RainDeathReason: died by nature forces.
 	}
 }

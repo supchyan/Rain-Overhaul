@@ -1,0 +1,36 @@
+Mods: {
+	RainOverhaul: {
+		Configs: {
+			RainConfig: {
+				DisplayName: Параметры дождя
+
+				Intensity: {
+					Header: ""
+					Label: Значение
+					Tooltip: ""
+				}
+
+				Headers.RainIntensity: Интенсивность дождя
+			}
+
+			RainConfigAdditions: {
+				DisplayName: Дополнительные параметры дождя
+				Headers.RainWorldExactly: Дополнения
+
+				RainWorld: {
+					Label: Режим Rain World
+					Tooltip:
+						'''
+						Этот переключатель увеличивает силу дождя до максимума,
+						делая его "тяжелым для выживания". Почти, как в "Rain World"!
+
+						[c/888888:Отключает параметр "{$RainConfig.Headers.RainIntensity}" для всех игроков.]
+						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+						'''
+				}
+			}
+		}
+
+		RainDeathReason: погиб(-ла) от сил природы.
+	}
+}
