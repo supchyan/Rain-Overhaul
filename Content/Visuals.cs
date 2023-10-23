@@ -58,8 +58,6 @@ namespace RainOverhaul.Content {
                 if(RainTransition > 0f) RainTransition-=0.01f;
             }
 
-            Main.NewText("status: "+Main.IsItRaining+" | power: "+Main.maxRaining+" | time: "+Main.rainTime);
-
             if(Main.LocalPlayer.ZoneBeach||Main.LocalPlayer.ZoneJungle) Extra = 1.4f;
             else Extra = 1f;
 
