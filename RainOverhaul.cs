@@ -1,9 +1,9 @@
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace RainOverhaul {
 	public class RainOverhaul : Mod {

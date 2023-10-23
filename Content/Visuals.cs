@@ -1,12 +1,14 @@
 using System;
+﻿using System.ComponentModel;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-﻿using System.ComponentModel;
-using Terraria.Graphics.Effects;
-using Terraria.ModLoader.Config;
 using Terraria.Localization;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
+using Terraria.ModLoader.Config;
+
+
 
 namespace RainOverhaul.Content {
     public class startThis:ModPlayer {
