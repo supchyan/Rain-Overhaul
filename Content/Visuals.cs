@@ -16,14 +16,15 @@ namespace RainOverhaul.Content {
         private float RainTransition;
         private float Extra;
         private float WorldFactorY;
+        private bool TileAbove;
 
         public override void PreUpdateTime() {
             
             // WORLD PROPS
 
-            if(Main.maxTilesX == 4200) WorldFactorY = 4400f;
-            else if(Main.maxTilesX == 6400) WorldFactorY = 6600f;
-            else if(Main.maxTilesX == 8400) WorldFactorY = 8800f;
+            // if(Main.maxTilesX == 4200) WorldFactorY = 4400f;
+            // else if(Main.maxTilesX == 6400) WorldFactorY = 6600f;
+            // else if(Main.maxTilesX == 8400) WorldFactorY = 8800f;
 
             // RAIN FILTER
 
@@ -32,10 +33,20 @@ namespace RainOverhaul.Content {
             Tile tile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             bool WallCollision = tile.WallType > WallID.None;
 
+            for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
+                if(Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y].HasTile) {
+                    TileAbove = true;
+                    break;
+                }
+                else TileAbove = false;
+            }
+
+            // bool FullCondition = WallCollision && TileAbove;
+
             bool rainCondition =
-                 Main.raining && !WallCollision && 
+                 Main.raining && !TileAbove &&
                 !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow && 
-                !Main.LocalPlayer.ZoneNormalSpace && Main.LocalPlayer.position.Y < WorldFactorY;
+                !Main.LocalPlayer.ZoneNormalSpace; // Main.LocalPlayer.position.Y < WorldFactorY
 
             if(rainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;
