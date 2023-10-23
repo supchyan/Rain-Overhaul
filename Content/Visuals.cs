@@ -50,8 +50,8 @@ namespace RainOverhaul.Content {
             bool rainCondition =
                 Main.IsItRaining && !TileAbovePlayer &&
                 !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow && 
-                !Main.LocalPlayer.ZoneNormalSpace; // Main.LocalPlayer.position.Y < WorldFactorY
-
+                !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneDesert;
+                
             if(rainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;
             } else {
