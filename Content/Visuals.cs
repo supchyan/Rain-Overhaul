@@ -24,6 +24,8 @@ namespace RainOverhaul.Content {
         private float Extra;
         private bool TileAbovePlayer;
         private bool TileAboveNPC;
+        public static bool SoundCondition;
+        public static bool DimSoundCondition;
 
         public override void PostUpdateTime() {
 
@@ -44,11 +46,12 @@ namespace RainOverhaul.Content {
                 else TileAbovePlayer = false;
             }
 
-            bool RainCondition =
-                Main.IsItRaining && !TileAbovePlayer &&
-                !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow && 
-                !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneDesert;
-                
+            bool RainCondition = !TileAbovePlayer && Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace;
+
+            SoundCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && ModContent.GetInstance<RainConfigAdditions>().cRainWorld; 
+            
+            DimSoundCondition = TileAbovePlayer && Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && ModContent.GetInstance<RainConfigAdditions>().cRainWorld;
+
             if(RainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;
             } else {
@@ -100,4 +103,31 @@ namespace RainOverhaul.Content {
             }
         }
     }
+    public class aRainSound:ModBiome {
+        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/sRain");
+
+        public override bool IsBiomeActive(Player player) {
+            if(Visuals.SoundCondition) {
+                return true;
+            } else return false;
+        }
+    }
+    public class aDimRainSound:ModBiome {
+        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/sDimRain");
+
+        public override bool IsBiomeActive(Player player) {
+            if(Visuals.DimSoundCondition) {
+                return true;
+            } else return false;
+        }
+    }
+    public sealed class aRainSoundRegister:ILoadable {
+		public void Load(Mod mod) {
+			MusicLoader.AddMusic(mod, "Content/sRain");
+            MusicLoader.AddMusic(mod, "Content/sDimRain");
+        }
+		public void Unload() { }
+	}
 }

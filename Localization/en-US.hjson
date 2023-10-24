@@ -10,20 +10,7 @@ Mods: {
 					Tooltip: ""
 				}
 
-				Headers: {
-					RainIntensity: Rain intensity
-					RainSound: Better Rain Sound [c/ffff00:(Work in progress)]
-				}
-
-				cRainSound: {
-					Header: ""
-					Label: ☶
-					Tooltip:
-						'''
-						Enables new rain sound effects.
-						[c/ffff00:However doesn't do anything right now.]
-						'''
-				}
+				Headers.RainIntensity: Rain intensity
 			}
 
 			RainConfigAdditions: {
@@ -54,6 +41,21 @@ Mods: {
 			RainSounds: {
 				DisplayName: Rain Sounds
 				TownNPCDialogueName: the Rain Sounds
+			}
+
+			RainSoundAdditional: {
+				TownNPCDialogueName: the Rain Sound Additional
+				DisplayName: Rain Sound Additional
+			}
+
+			aDimRainSound: {
+				DisplayName: a Dim Rain Sound
+				TownNPCDialogueName: the a Dim Rain Sound
+			}
+
+			aRainSound: {
+				DisplayName: a Rain Sound
+				TownNPCDialogueName: the a Rain Sound
 			}
 		}
 	}

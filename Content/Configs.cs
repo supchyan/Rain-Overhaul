@@ -11,10 +11,6 @@ namespace RainOverhaul.Content {
         [Increment(0.25f)]
         [Range(0f, 1f)]
         public float cIntensity;
-
-        [Header("RainSound")]
-        [DefaultValue(false)]
-        public bool cRainSound;
     }
     public class RainConfigAdditions:ModConfig {
         public override ConfigScope Mode => ConfigScope.ServerSide;
