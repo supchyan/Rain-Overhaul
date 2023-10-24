@@ -21,6 +21,7 @@ namespace RainOverhaul.Content {
         private float Intensity;
         private float HardIntensity;
         private float RainTransition;
+        private float ShakeTransition;
         private float Extra;
         private bool TileAbovePlayer;
         private bool TileAboveNPC;
@@ -34,9 +35,11 @@ namespace RainOverhaul.Content {
             // RAIN FILTER
 
             Filters.Scene.Activate("RainFilter"); 
+            Filters.Scene.Activate("RainShake");
+            Filters.Scene.Activate("RainVignette");
 
             Tile tile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
-            bool WallCollision = tile.WallType > WallID.None;
+            // bool WallCollision = tile.WallType > WallID.None; // old stuff if u wanna get back wall collision rain condition
 
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
                 if(Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y].HasTile) {
@@ -46,16 +49,23 @@ namespace RainOverhaul.Content {
                 else TileAbovePlayer = false;
             }
 
-            bool RainCondition = !TileAbovePlayer && Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace;
-
-            SoundCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && ModContent.GetInstance<RainConfigAdditions>().cRainWorld; 
+            bool CommonCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
             
-            DimSoundCondition = TileAbovePlayer && Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && ModContent.GetInstance<RainConfigAdditions>().cRainWorld;
+            bool RainCondition = !TileAbovePlayer && CommonCondition;
+            bool ShakeCondition = TileAbovePlayer && CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld;
+
+            SoundCondition = CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld; 
+            DimSoundCondition = ShakeCondition;
 
             if(RainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;
             } else {
                 if(RainTransition > 0f) RainTransition-=0.01f;
+            }
+            if(ShakeCondition) {
+                if(ShakeTransition < 1f) ShakeTransition+=0.01f;
+            } else {
+                if(ShakeTransition > 0f) ShakeTransition-=0.01f;
             }
 
             if(Main.LocalPlayer.ZoneBeach||Main.LocalPlayer.ZoneJungle) Extra = 1.4f;
@@ -64,9 +74,12 @@ namespace RainOverhaul.Content {
             Intensity = 550*Main.maxRaining/(20.0f * 645.0f)*ModContent.GetInstance<RainConfig>().cIntensity;
             HardIntensity = 550*Main.maxRaining/(20.0f * 645.0f)*2.5f;           
 
+            Filters.Scene["RainShake"].GetShader().UseOpacity(ShakeTransition*1.07f).UseIntensity(3.7f);
+
             if(!ModContent.GetInstance<RainConfigAdditions>().cRainWorld) {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
             } else {
+
                 KillEnemiesWithRain();
                 
                 if(RainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
@@ -77,7 +90,7 @@ namespace RainOverhaul.Content {
                     } 
                     if(Main.LocalPlayer.velocity.Y != 0) Main.LocalPlayer.velocity.Y += HardIntensity*50;
                 }
-                Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);
+                Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);            
             }
         }
         private void KillEnemiesWithRain() {

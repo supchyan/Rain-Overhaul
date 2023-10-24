@@ -21,7 +21,6 @@ float4 uSourceRect;
 float2 uZoom;
 
 float4 RainFilter(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
-
     float velocity = 0.3f;
     float forceX = 3.0f;
     float forceY = 0.01f;
@@ -29,7 +28,7 @@ float4 RainFilter(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
     float4 distort = tex2D(uImage1, float2(
         uv.x * forceX + uv.y * sin(uTime)/4.0f,
         uv.y * forceY + uTime * velocity
-        ));
+    ));
     float2 rainVec = (uv.xy - distort.xy*uOpacity);
 
     float4 rain = tex2D(uImage0, rainVec);
@@ -43,11 +42,8 @@ float4 RainFilter(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 
     return rain;
 }
-
-technique Technique1
-{
-    pass RainFilter
-    {
+technique Technique1 {
+    pass RainFilter {
         PixelShader = compile ps_2_0 RainFilter();
     }
 }

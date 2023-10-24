@@ -10,7 +10,21 @@ Mods: {
 					Tooltip: ""
 				}
 
-				Headers.RainIntensity: Rain intensity
+				Headers: {
+					RainIntensity: Rain intensity
+					ShakeAmplitude: Shake Amplitude Header
+					ShakeVelocity: Shake Velocity Header
+				}
+
+				cShakeAmplitude: {
+					Label: c Shake Amplitude
+					Tooltip: ""
+				}
+
+				cShakeVelocity: {
+					Label: c Shake Velocity
+					Tooltip: ""
+				}
 			}
 
 			RainConfigAdditions: {
