@@ -1,17 +1,15 @@
 using System;
-﻿using System.ComponentModel;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader.Config;
-
-
+using Terraria.Audio;
+using ReLogic.Utilities;
 
 namespace RainOverhaul.Content {
-    public class startThis:ModPlayer {
+    public class ForcedRainSync:ModPlayer {
         public override void OnEnterWorld() {
             if (Main.netMode == NetmodeID.Server && Main.maxRaining == 0) {
                 Main.StartRain();
@@ -25,6 +23,7 @@ namespace RainOverhaul.Content {
         private float RainTransition;
         private float Extra;
         private bool TileAbovePlayer;
+        private bool TileAboveNPC;
 
         public override void PostUpdateTime() {
 
@@ -45,14 +44,12 @@ namespace RainOverhaul.Content {
                 else TileAbovePlayer = false;
             }
 
-            // bool FullCondition = WallCollision && TileAbove;
-
-            bool rainCondition =
+            bool RainCondition =
                 Main.IsItRaining && !TileAbovePlayer &&
                 !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow && 
                 !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneDesert;
                 
-            if(rainCondition) {
+            if(RainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;
             } else {
                 if(RainTransition > 0f) RainTransition-=0.01f;
@@ -67,7 +64,9 @@ namespace RainOverhaul.Content {
             if(!ModContent.GetInstance<RainConfigAdditions>().cRainWorld) {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
             } else {
-                if(rainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
+                KillEnemiesWithRain();
+                
+                if(RainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
                     Main.LocalPlayer.statLife -= (int)Math.Round(HardIntensity*20);
                     if(Main.LocalPlayer.statLife <= 0 && Main.LocalPlayer.active) {
                         Main.LocalPlayer.statLife = 0;
@@ -78,22 +77,27 @@ namespace RainOverhaul.Content {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);
             }
         }
-    }
-    public class RainConfig:ModConfig {
-		public override ConfigScope Mode => ConfigScope.ClientSide;
+        private void KillEnemiesWithRain() {
+            for(int i=0; i<Main.maxNPCs; i++) {
+                NPC Victim = Main.npc[i];
 
-		[DefaultValue(1)]
-        [DrawTicks]
-        [Increment(0.25f)]
-        [Range(0f, 1f)]
-        [Header("RainIntensity")]
-		public float cIntensity;
-    }
-    public class RainConfigAdditions:ModConfig {
-		public override ConfigScope Mode => ConfigScope.ServerSide;
+                for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Victim.Top.ToTileCoordinates().Y; y++) {
+                    if(Main.tile[Victim.Center.ToTileCoordinates().X,y].HasTile) {
+                        TileAboveNPC = true;
+                        break;
+                    }
+                    else TileAboveNPC = false;
+                }
 
-        [Header("RainWorldExactly")]
-        [DefaultValue(false)]
-		public bool cRainWorld;
+                bool damageCondition = Main.IsItRaining && !TileAboveNPC;
+
+                if(damageCondition) {
+                    if(Victim.life <= 3 && Victim.active) {
+                        Victim.life = 0;
+                        Victim.checkDead();
+                    } else Victim.life -= (int)Math.Round(HardIntensity*20);
+                }
+            }
+        }
     }
 }

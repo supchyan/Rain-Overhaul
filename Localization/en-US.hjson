@@ -10,12 +10,29 @@ Mods: {
 					Tooltip: ""
 				}
 
-				Headers.RainIntensity: Rain intensity
+				Headers: {
+					RainIntensity: Rain intensity
+					RainSound: Better Rain Sound [c/ffff00:(Work in progress)]
+				}
+
+				cRainSound: {
+					Header: ""
+					Label: ☶
+					Tooltip:
+						'''
+						Enables new rain sound effects.
+						[c/ffff00:However doesn't do anything right now.]
+						'''
+				}
 			}
 
 			RainConfigAdditions: {
 				DisplayName: More Rain Properties
-				Headers.RainWorldExactly: Additionals
+
+				Headers: {
+					RainWorldExactly: Additionals
+					MercilessRain: Merciless Rain Header
+				}
 
 				cRainWorld: {
 					Label: Rain World Mode
@@ -32,5 +49,12 @@ Mods: {
 		}
 
 		RainDeathReason: died by nature forces.
+
+		Biomes: {
+			RainSounds: {
+				DisplayName: Rain Sounds
+				TownNPCDialogueName: the Rain Sounds
+			}
+		}
 	}
 }
