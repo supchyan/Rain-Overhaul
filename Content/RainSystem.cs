@@ -35,8 +35,7 @@ namespace RainOverhaul.Content {
         private SoundStyle DeathSound = new SoundStyle("RainOverhaul/Content/Sounds/sDeath");
         public SlotId sDEATH;
 
-        public override void PostUpdateTime() {
-            
+        public override void PostUpdateTime() {            
             // Sync rain with server all time 
 
             Main.SyncRain();
@@ -45,16 +44,19 @@ namespace RainOverhaul.Content {
 
             Filters.Scene.Activate("RainFilter"); 
             Filters.Scene.Activate("RainShake");
-            // Filters.Scene.Activate("RainVignette");
+            // Filters.Scene.Activate("RainVignette"); 
 
-            Tile tile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
-            bool WallCollision = tile.WallType > WallID.None; // old stuff if u wanna get back wall collision rain condition
+            // Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
+            // bool WallCollision = tTile.WallType > WallID.None;
+
+            ThisTileType thisTileType = new ThisTileType();
 
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
-                if(Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y].HasTile && WallCollision) {
+                Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y];
+                if(tTile.HasTile&&!thisTileType.Exists(tTile))
+                {
                     PlayerInSafePlace = true;
                     break;
-                    
                 } else PlayerInSafePlace = false;
             }
 
@@ -100,76 +102,23 @@ namespace RainOverhaul.Content {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
             
             } else {                
-                if(RainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
+                if(RainCondition && !Main.LocalPlayer.dead) {
                     int fValue = (int)Math.Round(HardIntensity*20);
-
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                     
-                    Main.LocalPlayer.statLife -= fValue;
+                    if(!Main.LocalPlayer.immune) {
+                        Main.LocalPlayer.statLife -= fValue;
                     
-                    if(Main.LocalPlayer.statLife <= 0 && Main.LocalPlayer.active) {
-                        Main.LocalPlayer.statLife = 0;
-                        Main.LocalPlayer.KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason")), 9999, 0);
-                    
-                        sDEATH = SoundEngine.PlaySound(DeathSound with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, Main.player[Main.myPlayer].Center); // not syncing on server
-                    }
+                        if(Main.LocalPlayer.statLife <= 0 && Main.LocalPlayer.active) {
+                            Main.LocalPlayer.statLife = 0;
+                            Main.LocalPlayer.KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason")), 9999, 0);
+                        
+                            sDEATH = SoundEngine.PlaySound(DeathSound with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, Main.player[Main.myPlayer].Center); // not syncing on server
+                        }
+                    }                    
                 }
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);            
             }
         }
     }
-
-    // Damage control of NPCs under the rain 
-
-    public class VictimMustDie:GlobalNPC {
-        public static bool NPCinSafePlace;
-        public override void UpdateLifeRegen(NPC npc, ref int damage) {
-            Tile tile = Main.tile[npc.Center.ToTileCoordinates()];
-            bool WallCollision = tile.WallType > WallID.None;
-
-            for(int y = Main.screenPosition.ToTileCoordinates().Y; y < npc.Top.ToTileCoordinates().Y; y++) {
-                if(Main.tile[npc.Center.ToTileCoordinates().X,y].HasTile && WallCollision) {
-                    NPCinSafePlace = true;
-                    break;
-                }
-                else NPCinSafePlace = false;
-            }
-
-            int fValue = (int)Math.Round(RainSystem.HardIntensity*20);
-
-            bool damageCondition = Main.IsItRaining && !NPCinSafePlace;
-            if(damageCondition) npc.lifeRegen = -100*fValue;
-            else npc.lifeRegen = default;
-        }
-    }
-
-    // Audio replace (Rain World mode only)
-
-    public class aRainSound:ModBiome {
-        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sRain");
-
-        public override bool IsBiomeActive(Player player) {
-            if(RainSystem.SoundCondition) {
-                return true;
-            } else return false;
-        }
-    }
-    public class aDimRainSound:ModBiome {
-        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sDimRain");
-
-        public override bool IsBiomeActive(Player player) {
-            if(RainSystem.DimSoundCondition) {
-                return true;
-            } else return false;
-        }
-    }
-    public sealed class aRainSoundRegister:ILoadable {
-		public void Load(Mod mod) {
-			MusicLoader.AddMusic(mod, "Content/Sounds/sRain");
-            MusicLoader.AddMusic(mod, "Content/Sounds/sDimRain");
-        }
-		public void Unload() { }
-	}
 }

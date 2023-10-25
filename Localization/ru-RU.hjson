@@ -51,5 +51,7 @@ Mods: {
 				DisplayName: Кажется дождь начинается?
 			}
 		}
+
+		// Projectiles.Proj.DisplayName: Proj
 	}
 }

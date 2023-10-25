@@ -51,5 +51,7 @@ Mods: {
 				DisplayName: It's raining somewhere else?
 			}
 		}
+
+		Projectiles.Proj.DisplayName: Proj
 	}
 }
