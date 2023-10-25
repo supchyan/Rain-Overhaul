@@ -15,14 +15,10 @@ Mods: {
 
 			RainConfigAdditions: {
 				DisplayName: More Rain Properties
-
-				Headers: {
-					RainWorldExactly: Additionals
-					MercilessRain: Merciless Rain Header
-				}
+				Headers.RainWorldExactly: Additionals
 
 				cRainWorld: {
-					Label: Rain World Mode
+					Label: '''"Rain World" Mode'''
 					Tooltip:
 						'''
 						This switcher increases intensity of the rain to high values
@@ -38,16 +34,6 @@ Mods: {
 		RainDeathReason: died by nature forces.
 
 		Biomes: {
-			RainSounds: {
-				DisplayName: ""
-				TownNPCDialogueName: ""
-			}
-
-			RainSoundAdditional: {
-				TownNPCDialogueName: ""
-				DisplayName: ""
-			}
-
 			aDimRainSound: {
 				DisplayName: ""
 				TownNPCDialogueName: ""
@@ -56,6 +42,13 @@ Mods: {
 			aRainSound: {
 				DisplayName: ""
 				TownNPCDialogueName: ""
+			}
+		}
+
+		Buffs: {
+			ShelterNotification: {
+				Description: Rain is too strong! Find shelter to prevent inevitable!
+				DisplayName: It's raining somewhere else?
 			}
 		}
 	}

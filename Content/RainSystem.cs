@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.Audio;
 using ReLogic.Utilities;
+using Microsoft.Xna.Framework;
 
 namespace RainOverhaul.Content {
     public class ForcedRainSync:ModPlayer {
@@ -17,16 +18,19 @@ namespace RainOverhaul.Content {
             }
         }
     }
-    public class Visuals:ModSystem {
+    public class RainSystem:ModSystem {
+        private float OldMaxRaining;
+        private float MaxRainingTransition;
         private float Intensity;
         private float HardIntensity;
         private float RainTransition;
         private float ShakeTransition;
         private float Extra;
-        private bool TileAbovePlayer;
+        private bool PlayerInSafePlace;
         private bool TileAboveNPC;
         public static bool SoundCondition;
         public static bool DimSoundCondition;
+        private SoundStyle DeathSound = new SoundStyle("RainOverhaul/Content/Sounds/sDeath");
 
         public override void PostUpdateTime() {
 
@@ -42,21 +46,20 @@ namespace RainOverhaul.Content {
             bool WallCollision = tile.WallType > WallID.None; // old stuff if u wanna get back wall collision rain condition
 
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
-                if(Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y].HasTile &&
-                    WallCollision) {
-                    TileAbovePlayer = true;
+                if(Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y].HasTile && WallCollision) {
+                    PlayerInSafePlace = true;
                     break;
                 }
-                else TileAbovePlayer = false;
+                else PlayerInSafePlace = false;
             }
 
             bool CommonCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
             
-            bool RainCondition = !TileAbovePlayer && CommonCondition;
+            bool RainCondition = !PlayerInSafePlace && CommonCondition;
             bool ShakeCondition = CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld;
 
             SoundCondition = CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld; 
-            DimSoundCondition = ShakeCondition && TileAbovePlayer;
+            DimSoundCondition = ShakeCondition && PlayerInSafePlace;
 
             if(RainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;
@@ -71,25 +74,34 @@ namespace RainOverhaul.Content {
 
             if(Main.LocalPlayer.ZoneBeach||Main.LocalPlayer.ZoneJungle) Extra = 1.4f;
             else Extra = 1f;
+            
+            if(OldMaxRaining != Main.maxRaining) {
+                if(MaxRainingTransition<1f) MaxRainingTransition+=0.01f;
+                OldMaxRaining = MathHelper.Lerp(OldMaxRaining, Main.maxRaining, MaxRainingTransition);
+            } else {
+                MaxRainingTransition = 0f;
+            }
 
-            Intensity = 550*Main.maxRaining/(20.0f * 645.0f)*ModContent.GetInstance<RainConfig>().cIntensity;
-            HardIntensity = 550*Main.maxRaining/(20.0f * 645.0f)*2.5f;           
+            Intensity = 550*OldMaxRaining/(20.0f * 645.0f)*ModContent.GetInstance<RainConfig>().cIntensity;
+            HardIntensity = 550*OldMaxRaining/(20.0f * 645.0f)*2.5f;
 
             Filters.Scene["RainShake"].GetShader().UseOpacity(ShakeTransition*1.07f).UseIntensity(3.7f);
 
             if(!ModContent.GetInstance<RainConfigAdditions>().cRainWorld) {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
             } else {
-
+                
                 KillEnemiesWithRain();
                 
                 if(RainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
-                    Main.LocalPlayer.statLife -= (int)Math.Round(HardIntensity*20);
+                    int fValue = (int)Math.Round(HardIntensity*20);
+                    if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
+                    Main.LocalPlayer.statLife -= fValue;
                     if(Main.LocalPlayer.statLife <= 0 && Main.LocalPlayer.active) {
                         Main.LocalPlayer.statLife = 0;
                         Main.LocalPlayer.KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason")), 9999, 0);
-                    } 
-                    if(Main.LocalPlayer.velocity.Y != 0) Main.LocalPlayer.velocity.Y += HardIntensity*50;
+                        SoundEngine.PlaySound(DeathSound, Main.LocalPlayer.Center); // not syncing on server
+                    }
                 }
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);            
             }
@@ -120,28 +132,28 @@ namespace RainOverhaul.Content {
     }
     public class aRainSound:ModBiome {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/sRain");
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sRain");
 
         public override bool IsBiomeActive(Player player) {
-            if(Visuals.SoundCondition) {
+            if(RainSystem.SoundCondition) {
                 return true;
             } else return false;
         }
     }
     public class aDimRainSound:ModBiome {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/sDimRain");
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sDimRain");
 
         public override bool IsBiomeActive(Player player) {
-            if(Visuals.DimSoundCondition) {
+            if(RainSystem.DimSoundCondition) {
                 return true;
             } else return false;
         }
     }
     public sealed class aRainSoundRegister:ILoadable {
 		public void Load(Mod mod) {
-			MusicLoader.AddMusic(mod, "Content/sRain");
-            MusicLoader.AddMusic(mod, "Content/sDimRain");
+			MusicLoader.AddMusic(mod, "Content/Sounds/sRain");
+            MusicLoader.AddMusic(mod, "Content/Sounds/sDimRain");
         }
 		public void Unload() { }
 	}

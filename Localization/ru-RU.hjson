@@ -15,14 +15,10 @@ Mods: {
 
 			RainConfigAdditions: {
 				DisplayName: Дополнительные параметры дождя
-
-				Headers: {
-					RainWorldExactly: Дополнения
-					// MercilessRain: Merciless Rain Header
-				}
+				Headers.RainWorldExactly: Дополнения
 
 				cRainWorld: {
-					Label: Режим Rain World
+					Label: Режим "Rain World"
 					Tooltip:
 						'''
 						Этот переключатель увеличивает силу дождя до максимума,
@@ -38,16 +34,6 @@ Mods: {
 		RainDeathReason: погиб(-ла) под силами природы.
 
 		Biomes: {
-			RainSounds: {
-				DisplayName: ""
-				TownNPCDialogueName: ""
-			}
-
-			RainSoundAdditional: {
-				TownNPCDialogueName: ""
-				DisplayName: ""
-			}
-
 			aDimRainSound: {
 				DisplayName: ""
 				TownNPCDialogueName: ""
@@ -56,6 +42,13 @@ Mods: {
 			aRainSound: {
 				DisplayName: ""
 				TownNPCDialogueName: ""
+			}
+		}
+
+		Buffs: {
+			ShelterNotification: {
+				Description: Дождь усилился! Скорее найдите убежище, чтобы предотвратить неминуемое!
+				DisplayName: Кажется дождь начинается?
 			}
 		}
 	}
