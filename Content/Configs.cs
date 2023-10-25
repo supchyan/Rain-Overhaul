@@ -8,7 +8,7 @@ namespace RainOverhaul.Content {
         [Header("RainIntensity")]
         [DefaultValue(1)]
         [DrawTicks]
-        [Increment(0.25f)]
+        [Increment(0.20f)]
         [Range(0f, 1f)]
         public float cIntensity;
     }
