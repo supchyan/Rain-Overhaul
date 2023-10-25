@@ -53,23 +53,23 @@ Mods: {
 
 		Biomes: {
 			RainSounds: {
-				DisplayName: Rain Sounds
-				TownNPCDialogueName: the Rain Sounds
+				DisplayName: ""
+				TownNPCDialogueName: ""
 			}
 
 			RainSoundAdditional: {
-				TownNPCDialogueName: the Rain Sound Additional
-				DisplayName: Rain Sound Additional
+				TownNPCDialogueName: ""
+				DisplayName: ""
 			}
 
 			aDimRainSound: {
-				DisplayName: a Dim Rain Sound
-				TownNPCDialogueName: the a Dim Rain Sound
+				DisplayName: ""
+				TownNPCDialogueName: ""
 			}
 
 			aRainSound: {
-				DisplayName: a Rain Sound
-				TownNPCDialogueName: the a Rain Sound
+				DisplayName: ""
+				TownNPCDialogueName: ""
 			}
 		}
 	}

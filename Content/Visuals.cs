@@ -112,6 +112,7 @@ namespace RainOverhaul.Content {
                     if(Victim.life <= 3 && Victim.active) {
                         Victim.life = 0;
                         Victim.checkDead();
+                        Victim.active = false;
                     } else Victim.life -= (int)Math.Round(HardIntensity*20);
                 }
             }
