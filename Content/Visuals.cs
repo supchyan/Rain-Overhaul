@@ -36,13 +36,14 @@ namespace RainOverhaul.Content {
 
             Filters.Scene.Activate("RainFilter"); 
             Filters.Scene.Activate("RainShake");
-            Filters.Scene.Activate("RainVignette");
+            // Filters.Scene.Activate("RainVignette");
 
             Tile tile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
-            // bool WallCollision = tile.WallType > WallID.None; // old stuff if u wanna get back wall collision rain condition
+            bool WallCollision = tile.WallType > WallID.None; // old stuff if u wanna get back wall collision rain condition
 
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
-                if(Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y].HasTile) {
+                if(Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y].HasTile &&
+                    WallCollision) {
                     TileAbovePlayer = true;
                     break;
                 }
@@ -52,10 +53,10 @@ namespace RainOverhaul.Content {
             bool CommonCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
             
             bool RainCondition = !TileAbovePlayer && CommonCondition;
-            bool ShakeCondition = TileAbovePlayer && CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld;
+            bool ShakeCondition = CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld;
 
             SoundCondition = CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld; 
-            DimSoundCondition = ShakeCondition;
+            DimSoundCondition = ShakeCondition && TileAbovePlayer;
 
             if(RainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;

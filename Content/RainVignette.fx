@@ -26,12 +26,15 @@ float4 RainVignette(float4 src : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
     coord.x -= 0.5;
     coord.y -= 0.5;
 
+    float4 color = tex2D(uImage0, coord);
+
     float vignette = length(coord);
     vignette += 0.12;
     vignette = smoothstep(0.6, 0.5, vignette);
 
-    src = float4(src.r,src.g, src.b, vignette);
-    return src;
+    color.rgb = vignette*color.rgb;
+
+    return color*src;
 }
 technique Technique3 {
     pass RainVignette {
