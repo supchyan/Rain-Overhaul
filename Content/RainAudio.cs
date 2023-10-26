@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace RainOverhaul.Content {
+    
     // Audio replace (Rain World mode only)
     public class aRainSound:ModBiome {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;

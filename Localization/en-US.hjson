@@ -50,6 +50,11 @@ Mods: {
 				Description: Rain is too strong! Find shelter to prevent inevitable!
 				DisplayName: It's raining somewhere else?
 			}
+
+			HeavyRainDebuff: {
+				DisplayName: Heavy Rain Debuff
+				Description: Mods.RainOverhaul.Buffs.HeavyRainDebuff.Description
+			}
 		}
 
 		Projectiles.Proj.DisplayName: Proj

@@ -8,6 +8,8 @@ using Terraria.Graphics.Effects;
 using Terraria.Audio;
 using ReLogic.Utilities;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.IO;
 
 namespace RainOverhaul.Content {
     public class ForcedRainSync:ModPlayer {
@@ -27,20 +29,16 @@ namespace RainOverhaul.Content {
         private float ShakeTransition;
         private float Extra;
         private bool PlayerInSafePlace;
-        // public static bool NPCinSafePlace;
+        public static bool NPCinSafePlace;
         public static bool SoundCondition;
         public static bool DimSoundCondition;
-        public static bool NPCspawnCondition;
-        public static bool HitThem;
-        private SoundStyle DeathSound = new SoundStyle("RainOverhaul/Content/Sounds/sDeath");
-        public SlotId sDEATH;
 
-        public override void PostUpdateTime() {            
+        // Rain logic
+        public override void PostUpdateTime() {   
+
             // Sync rain with server all time 
 
             Main.SyncRain();
-
-            // Rain logic
 
             Filters.Scene.Activate("RainFilter"); 
             Filters.Scene.Activate("RainShake");
@@ -49,11 +47,9 @@ namespace RainOverhaul.Content {
             // Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             // bool WallCollision = tTile.WallType > WallID.None;
 
-            ThisTileType thisTileType = new ThisTileType();
-
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
                 Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y];
-                if(tTile.HasTile&&!thisTileType.Exists(tTile))
+                if(tTile.HasTile&&RainTile.CanProtect(tTile))
                 {
                     PlayerInSafePlace = true;
                     break;
@@ -67,7 +63,6 @@ namespace RainOverhaul.Content {
 
             SoundCondition = CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld; 
             DimSoundCondition = ShakeCondition && PlayerInSafePlace;
-            NPCspawnCondition = (!ModContent.GetInstance<RainConfigAdditions>().cRainWorld) || (!CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld);
 
             if(RainCondition) {
                 if(RainTransition < 1f) RainTransition+=0.01f;
@@ -105,17 +100,6 @@ namespace RainOverhaul.Content {
                 if(RainCondition && !Main.LocalPlayer.dead) {
                     int fValue = (int)Math.Round(HardIntensity*20);
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
-                    
-                    if(!Main.LocalPlayer.immune) {
-                        Main.LocalPlayer.statLife -= fValue;
-                    
-                        if(Main.LocalPlayer.statLife <= 0 && Main.LocalPlayer.active) {
-                            Main.LocalPlayer.statLife = 0;
-                            Main.LocalPlayer.KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason")), 9999, 0);
-                        
-                            sDEATH = SoundEngine.PlaySound(DeathSound with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, Main.player[Main.myPlayer].Center); // not syncing on server
-                        }
-                    }                    
                 }
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);            
             }

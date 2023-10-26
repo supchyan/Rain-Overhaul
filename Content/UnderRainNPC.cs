@@ -1,18 +1,21 @@
 using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
-namespace RainOverhaul.Content {
-    // Damage control of NPCs under the rain 
+namespace RainOverhaul.Content {    
     public class VictimMustDie:GlobalNPC {
         public static bool NPCinSafePlace;
-        public override void UpdateLifeRegen(NPC npc, ref int damage) {
-            ThisTileType thisTileType = new ThisTileType();
+        public static bool DamageCondition;
+        public static int fValue;
 
+        // Damage control of NPCs under the rain 
+        public override void AI(NPC npc) {
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < npc.Top.ToTileCoordinates().Y; y++) {
                 Tile tTile = Main.tile[npc.Center.ToTileCoordinates().X,y];
-                if(tTile.HasTile&&!thisTileType.Exists(tTile))
+                if(tTile.HasTile&&RainTile.CanProtect(tTile))
                 {
                     NPCinSafePlace = true;
                     break;
@@ -20,11 +23,10 @@ namespace RainOverhaul.Content {
                 else NPCinSafePlace = false;
             }
 
-            int fValue = (int)Math.Round(RainSystem.HardIntensity*20);
+            fValue = (int)Math.Round(RainSystem.HardIntensity*20);
 
-            bool DamageCondition = !NPCinSafePlace;
-            if(DamageCondition) npc.lifeRegen = -100*fValue;
-            else npc.lifeRegen = default;
+            DamageCondition = !NPCinSafePlace && Main.raining;
+            if(DamageCondition) npc.AddBuff(ModContent.BuffType<ShelterNotification>(), 2);
         }
     }
 }
