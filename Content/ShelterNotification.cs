@@ -24,13 +24,12 @@ namespace RainOverhaul.Content {
         public override void Update(Player player, ref int buffIndex) {
             rIntensity = 550*Main.maxRaining/(20.0f * 645.0f)*2.5f;
             int fValue = (int)Math.Round(rIntensity*20);
-
-            if(!player.immune) {
-                if(player.statLife>10) player.lifeRegen -= 100*fValue;
-                else {
-                    player.KillMe(PlayerDeathReason.ByCustomReason(player.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason")), 9999, 0);
-                    TUUM = SoundEngine.PlaySound(DeathSound with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, player.Center);
-                }
+            
+            if(player.statLife>10) player.lifeRegen -= 100*fValue;
+            else {
+                player.KillMe(PlayerDeathReason.ByCustomReason(player.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason")), 9999, 0);
+                TUUM = SoundEngine.PlaySound(DeathSound with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, player.Center);
+                
             }
 
             if(player.velocity.Y < 0) player.velocity.Y += rIntensity*5;

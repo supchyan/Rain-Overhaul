@@ -96,7 +96,7 @@ namespace RainOverhaul.Content {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
             
             } else {                
-                if(RainCondition && !Main.LocalPlayer.dead) {
+                if(RainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
                     int fValue = (int)Math.Round(HardIntensity*20);
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                 }
