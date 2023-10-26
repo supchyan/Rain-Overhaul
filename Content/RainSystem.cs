@@ -79,11 +79,10 @@ namespace RainOverhaul.Content {
 
             if(Main.LocalPlayer.ZoneBeach||Main.LocalPlayer.ZoneJungle) Extra = 1.4f;
             else Extra = 1f;
-            
+
             if(OldMaxRaining != Main.maxRaining) {
                 if(MaxRainingTransition<1f) MaxRainingTransition+=0.01f;
                 OldMaxRaining = MathHelper.Lerp(OldMaxRaining, Main.maxRaining, MaxRainingTransition);
-            
             } else {
                 MaxRainingTransition = 0f;
             }
