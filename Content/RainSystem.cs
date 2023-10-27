@@ -2,14 +2,8 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
-using Terraria.Audio;
-using ReLogic.Utilities;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.IO;
 
 namespace RainOverhaul.Content {
     public class ForcedRainSync:ModPlayer {
@@ -34,25 +28,25 @@ namespace RainOverhaul.Content {
         public static bool DimSoundCondition;
 
         // Rain logic
-        public override void PostUpdateTime() {   
-
+        public override void PostUpdateTime() {
+            
             // Sync rain with server all time 
 
             Main.SyncRain();
 
             Filters.Scene.Activate("RainFilter"); 
             Filters.Scene.Activate("RainShake");
-            // Filters.Scene.Activate("RainVignette"); 
 
             // Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             // bool WallCollision = tTile.WallType > WallID.None;
+            RainTile RT = new RainTile();
 
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
                 Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates().X,y];
-                if(tTile.HasTile&&RainTile.CanProtect(tTile))
-                {
+                if(tTile.HasTile&&!RT.CantProtectVanilla(tTile)) {
                     PlayerInSafePlace = true;
                     break;
+
                 } else PlayerInSafePlace = false;
             }
 
@@ -95,7 +89,7 @@ namespace RainOverhaul.Content {
             if(!ModContent.GetInstance<RainConfigAdditions>().cRainWorld) {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
             
-            } else {                
+            } else {             
                 if(RainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
                     int fValue = (int)Math.Round(HardIntensity*20);
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);

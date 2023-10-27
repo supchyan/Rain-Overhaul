@@ -15,10 +15,6 @@ namespace RainOverhaul {
 			Ref<Effect> ShakeRef = new Ref<Effect>(ModContent.Request<Effect>("RainOverhaul/Content/Effects/RainShake", AssetRequestMode.ImmediateLoad).Value);
 			Filters.Scene["RainShake"] = new Filter(new ScreenShaderData(ShakeRef, "RainShake"), EffectPriority.VeryHigh);
 			Filters.Scene["RainShake"].Load();
-
-			Ref<Effect> VignetteRef = new Ref<Effect>(ModContent.Request<Effect>("RainOverhaul/Content/Effects/RainVignette", AssetRequestMode.ImmediateLoad).Value);
-			Filters.Scene["RainVignette"] = new Filter(new ScreenShaderData(VignetteRef, "RainVignette"), EffectPriority.VeryHigh);
-			Filters.Scene["RainVignette"].Load();	
 		}
 	}
 }
