@@ -31,7 +31,6 @@ namespace RainOverhaul.Content {
         public override void PostUpdateTime() {
             
             // Sync rain with server all time 
-
             Main.SyncRain();
 
             Filters.Scene.Activate("RainFilter"); 

@@ -20,5 +20,9 @@ namespace RainOverhaul.Content {
             if(player.velocity.Y < 0) player.velocity.Y += rIntensity*5;
             player.mount.Dismount(player);
         }
+        public override void Update(NPC npc, ref int buffIndex) {
+            npc.TryGetGlobalNPC<UnderRainNPC>(out UnderRainNPC Mmm);
+            Mmm.LifeLost = true;
+        }
     }
 }

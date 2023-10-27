@@ -6,39 +6,26 @@ using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using System.Linq;
+using Terraria.ID;
 
 namespace RainOverhaul.Content {    
     public class UnderRainNPC:GlobalNPC {
 
         // Damage control of NPCs under the rain
-        public static int OldLife;
-        public override bool InstancePerEntity => true; 
-
-        public override void OnSpawn(NPC npc, IEntitySource source) {
-            OldLife = npc.life;
-            // npc.AddBuff(ModContent.BuffType<ShelterNotification>(), int.MaxValue);
+        public bool LifeLost;
+        public override bool InstancePerEntity => true;
+        public override void ResetEffects(NPC npc) {
+            LifeLost = false;
         }
-        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter) {
-            binaryWriter.Write(OldLife);
-		}
-		public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader) {
-            OldLife = binaryReader.ReadInt32();
-		}
-
         public override void AI(NPC npc) {
-            for(int i=0; i<Main.maxPlayers; i++) {
-                if(Main.player[i].HasBuff<ShelterNotification>() && Main.player[i].active && !Main.player[i].dead) {
-                    float rIntensity = 550*Main.maxRaining/(20.0f * 645.0f)*2.5f;
-                    int fValue = (int)Math.Round(rIntensity*20);
-
-                    OldLife -= 2*fValue;
-                    npc.life = OldLife;
-                    if(OldLife <= 1) {
-                        npc.active = false;
-                        npc.CheckActive();
-                        npc.checkDead();
-                    }
-                }
+            if(Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.LocalPlayer.active && !Main.LocalPlayer.dead) {
+                npc.AddBuff(ModContent.BuffType<ShelterNotification>(), 2);
+                Projectile.NewProjectile(Entity.GetSource_None(), npc.Center, Vector2.Zero, ModContent.ProjectileType<RainCircle>(), 1, 1, npc.whoAmI);
+            }
+        }
+        public override void UpdateLifeRegen(NPC npc, ref int damage) {
+            if(LifeLost) {
+                npc.lifeRegen -= 200;
             }
         }
     }

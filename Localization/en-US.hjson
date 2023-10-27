@@ -57,6 +57,9 @@ Mods: {
 			}
 		}
 
-		Projectiles.Proj.DisplayName: Proj
+		Projectiles: {
+			Proj.DisplayName: Proj
+			RainCircle.DisplayName: Rain Circle
+		}
 	}
 }
