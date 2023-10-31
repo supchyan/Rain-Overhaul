@@ -1,10 +1,14 @@
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace RainOverhaul.Content {
     public class RainCircle:ModProjectile {
-        public override string Texture => "RainOverhaul/Content/Texture/RedSquare";
+        public override string Texture => "RainOverhaul/Content/Texture/Circle";
         public override void SetDefaults() {
             Projectile.width = 128;
             Projectile.height = 128;
@@ -13,15 +17,18 @@ namespace RainOverhaul.Content {
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = 2;
+            Projectile.Opacity = 1f;
         }
         public override void AI() {
-            Projectile.netImportant = true;
-            Projectile.netUpdate = true;
+            Projectile.timeLeft = 2;
 
-            NPC npc = Main.npc[Projectile.owner];
-            
-            Projectile.position = npc.Center - new Vector2(Projectile.width/2f, Projectile.height/2f);
+            Player player = Main.player[Projectile.owner];
+
+            for(int i=0; i<Main.maxNPCs; i++) {
+                Projectile.velocity = Main.npc[i].velocity;
+                Projectile.position = Main.npc[i].Center - new Vector2(Projectile.width/2f, Projectile.height/2f);
+                if(!Main.npc[i].active || player.HasBuff<ShelterNotification>()) Projectile.timeLeft = 0;
+            }
         }
     }
 }

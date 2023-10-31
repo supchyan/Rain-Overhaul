@@ -35,6 +35,7 @@ namespace RainOverhaul.Content {
 
             Filters.Scene.Activate("RainFilter"); 
             Filters.Scene.Activate("RainShake");
+            // Filters.Scene.Activate("RainCircle");
 
             // Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             // bool WallCollision = tTile.WallType > WallID.None;
@@ -50,7 +51,6 @@ namespace RainOverhaul.Content {
             }
 
             bool CommonCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
-            
             bool RainCondition = !PlayerInSafePlace && CommonCondition;
             bool ShakeCondition = CommonCondition && ModContent.GetInstance<RainConfigAdditions>().cRainWorld;
 
@@ -88,10 +88,15 @@ namespace RainOverhaul.Content {
             if(!ModContent.GetInstance<RainConfigAdditions>().cRainWorld) {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
             
-            } else {             
+            } else {
                 if(RainCondition && !Main.LocalPlayer.dead && !Main.LocalPlayer.immune) {
                     int fValue = (int)Math.Round(HardIntensity*20);
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
+                }
+                for(int i=0; i<Main.maxNPCs; i++) {
+                    if(!Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.npc[i].active && Main.npc[i].HasBuff<ShelterNotification>()) { //  && Main.npc[i].HasBuff<ShelterNotification>() for multiplayer
+                        Projectile.NewProjectile(Entity.GetSource_None(), Main.npc[i].Center, Main.npc[i].velocity, ModContent.ProjectileType<RainCircle>(), 0, 0, Main.LocalPlayer.whoAmI);
+                    }
                 }
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);            
             }

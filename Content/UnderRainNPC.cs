@@ -1,12 +1,5 @@
-using System;
-using System.IO;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using System.Linq;
-using Terraria.ID;
 
 namespace RainOverhaul.Content {    
     public class UnderRainNPC:GlobalNPC {
@@ -18,9 +11,10 @@ namespace RainOverhaul.Content {
             LifeLost = false;
         }
         public override void AI(NPC npc) {
-            if(Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.LocalPlayer.active && !Main.LocalPlayer.dead) {
-                npc.AddBuff(ModContent.BuffType<ShelterNotification>(), 2);
-                Projectile.NewProjectile(Entity.GetSource_None(), npc.Center, Vector2.Zero, ModContent.ProjectileType<RainCircle>(), 1, 1, npc.whoAmI);
+            if(ModContent.GetInstance<RainConfigAdditions>().cRainWorld) {
+                if(Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.LocalPlayer.active && !Main.LocalPlayer.dead) {
+                    npc.AddBuff(ModContent.BuffType<ShelterNotification>(), 2);
+                }
             }
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage) {

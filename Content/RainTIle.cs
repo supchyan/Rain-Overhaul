@@ -32,7 +32,8 @@ namespace RainOverhaul.Content {
             tTile.TileType==TileID.TargetDummy||tTile.TileType==TileID.TeaKettle||tTile.TileType==TileID.Toilets||tTile.TileType==TileID.Tombstones||
             tTile.TileType==TileID.Torches||tTile.TileType==TileID.VineFlowers||tTile.TileType==TileID.VineRope||tTile.TileType==TileID.Vines||
             tTile.TileType==TileID.WarTable||tTile.TileType==TileID.WarTableBanner||tTile.TileType==TileID.WaterCandle||
-            tTile.TileType==TileID.WebRope||tTile.TileType==TileID.WorkBenches||tTile.TileType==TileID.Sunflower;
+            tTile.TileType==TileID.WebRope||tTile.TileType==TileID.WorkBenches||tTile.TileType==TileID.Sunflower||
+            tTile.TileType==TileID.Platforms;
         }
     }
 }
