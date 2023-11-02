@@ -23,7 +23,6 @@ namespace RainOverhaul.Content {
         private float ShakeTransition;
         private float Extra;
         private bool PlayerInSafePlace;
-        public static bool NPCinSafePlace;
         public static bool SoundCondition;
         public static bool DimSoundCondition;
 
@@ -93,11 +92,11 @@ namespace RainOverhaul.Content {
                     int fValue = (int)Math.Round(HardIntensity*20);
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                 }
-                for(int i=0; i<Main.maxNPCs; i++) {
-                    if(!Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.npc[i].active && Main.npc[i].HasBuff<ShelterNotification>()) { //  && Main.npc[i].HasBuff<ShelterNotification>() for multiplayer
-                        Projectile.NewProjectile(Entity.GetSource_None(), Main.npc[i].Center, Main.npc[i].velocity, ModContent.ProjectileType<RainCircle>(), 0, 0, Main.LocalPlayer.whoAmI);
-                    }
-                }
+                // for(int i=0; i<Main.maxNPCs; i++) {
+                //     if(!Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.npc[i].active && Main.npc[i].HasBuff<ShelterNotification>()) {
+                //         Projectile.NewProjectile(Entity.GetSource_None(), Main.npc[i].Center, Main.npc[i].velocity, ModContent.ProjectileType<RainCircle>(), 0, 0, Main.LocalPlayer.whoAmI);
+                //     }
+                // }
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);            
             }
         }

@@ -8,10 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RainOverhaul.Content {
     public class RainCircle:ModProjectile {
-        public override string Texture => "RainOverhaul/Content/Texture/Circle";
+        public override string Texture => "RainOverhaul/Content/Texture/WIP";
         public override void SetDefaults() {
-            Projectile.width = 128;
-            Projectile.height = 128;
+            Projectile.width = 17;
+            Projectile.height = 18;
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
@@ -21,7 +21,6 @@ namespace RainOverhaul.Content {
         }
         public override void AI() {
             Projectile.timeLeft = 2;
-
             Player player = Main.player[Projectile.owner];
 
             for(int i=0; i<Main.maxNPCs; i++) {
