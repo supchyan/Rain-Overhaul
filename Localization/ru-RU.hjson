@@ -2,7 +2,7 @@ Mods: {
 	RainOverhaul: {
 		Configs: {
 			RainConfig: {
-				DisplayName: Параметры дождя
+				DisplayName: Rain Overhaul Параметры
 
 				cIntensity: {
 					Header: ""
@@ -14,7 +14,7 @@ Mods: {
 			}
 
 			RainConfigAdditions: {
-				DisplayName: Дополнительные параметры дождя
+				DisplayName: Rain Overhaul Дополнения
 				Headers.RainWorldExactly: Дополнения
 
 				cRainWorld: {
@@ -26,6 +26,10 @@ Mods: {
 
 						[c/888888:Отключает параметр "{$RainConfig.Headers.RainIntensity}" для всех игроков.]
 						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+
+						[c/ffff00:Работает в мультиплеере, но я настоятельно советую подождать,]
+						[c/ffff00:пока я не найду способ сделать эту механику в мультиплеере лучше]
+						[c/ffff00:с точки зрения гейм-дизайна.]
 						'''
 				}
 			}

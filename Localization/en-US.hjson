@@ -2,7 +2,7 @@ Mods: {
 	RainOverhaul: {
 		Configs: {
 			RainConfig: {
-				DisplayName: Rain Properties
+				DisplayName: Rain Overhaul Properties
 
 				cIntensity: {
 					Header: ""
@@ -14,7 +14,7 @@ Mods: {
 			}
 
 			RainConfigAdditions: {
-				DisplayName: More Rain Properties
+				DisplayName: Rain Overhaul Additionals
 				Headers.RainWorldExactly: Additionals
 
 				cRainWorld: {
@@ -26,6 +26,9 @@ Mods: {
 
 						[c/888888:Disables "{$RainConfig.Headers.RainIntensity}" parameter for everyone.]
 						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+
+						[c/ffff00:Works in multiplayer, but I highly suggest to wait, until I'll find way]
+						[c/ffff00:to make this game mechanic better in multiplayer from the game-design side.]
 						'''
 				}
 			}
