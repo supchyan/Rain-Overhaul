@@ -34,10 +34,16 @@ namespace RainOverhaul.Content {
 
             Filters.Scene.Activate("RainFilter"); 
             Filters.Scene.Activate("RainShake");
-            // Filters.Scene.Activate("RainCircle");
 
+            // this should draws above entities under the rain,
+            // when player in the save place
+            // Filters.Scene.Activate("RainCircle"); 
+
+            // old stuff, but returns true, when player is standing 
+            // before wall (collides it with it's body k?)
             // Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             // bool WallCollision = tTile.WallType > WallID.None;
+            
             RainTile RT = new RainTile();
 
             for(int y = Main.screenPosition.ToTileCoordinates().Y; y < Main.LocalPlayer.Top.ToTileCoordinates().Y; y++) {
@@ -92,11 +98,14 @@ namespace RainOverhaul.Content {
                     int fValue = (int)Math.Round(HardIntensity*20);
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                 }
+
+                // drawing circle with shader from above comment
                 // for(int i=0; i<Main.maxNPCs; i++) {
                 //     if(!Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.npc[i].active && Main.npc[i].HasBuff<ShelterNotification>()) {
                 //         Projectile.NewProjectile(Entity.GetSource_None(), Main.npc[i].Center, Main.npc[i].velocity, ModContent.ProjectileType<RainCircle>(), 0, 0, Main.LocalPlayer.whoAmI);
                 //     }
                 // }
+                
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(HardIntensity*RainTransition*Extra).UseIntensity(RainTransition);            
             }
         }
