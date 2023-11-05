@@ -14,16 +14,30 @@ namespace RainOverhaul.Content {
         }
         public override void AI(NPC npc) {
             RainTile RT = new RainTile();
-            for(int y = Main.screenPosition.ToTileCoordinates().Y; y < npc.Top.ToTileCoordinates().Y; y++) {
-                Tile tTile = Main.tile[npc.Center.ToTileCoordinates().X,y];
-                if(tTile.HasTile&&!RT.CantProtectVanilla(tTile)) {
-                    NPCinSafePlace = true;
-                    break;
+            if(!npc.townNPC) {
+                for(int y = Main.screenPosition.ToTileCoordinates().Y; y < npc.Top.ToTileCoordinates().Y; y++) {
+                    Tile tTile = Main.tile[npc.Center.ToTileCoordinates().X,y];
+                    if(tTile.HasTile&&!RT.CantProtectVanilla(tTile)) {
+                        NPCinSafePlace = true;
+                        break;
 
-                } else {
-                    NPCinSafePlace = false;
+                    } else {
+                        NPCinSafePlace = false;
+                    }
+                }
+            } else {
+                for(int y = 0; y < npc.Top.ToTileCoordinates().Y; y++) {
+                    Tile tTile = Main.tile[npc.Center.ToTileCoordinates().X,y];
+                    if(tTile.HasTile&&!RT.CantProtectVanilla(tTile)) {
+                        NPCinSafePlace = true;
+                        break;
+
+                    } else {
+                        NPCinSafePlace = false;
+                    }
                 }
             }
+            
             bool CommonCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
             if(ModContent.GetInstance<RainConfigAdditions>().cRainWorld&&Main.raining&&!NPCinSafePlace&&(Main.LocalPlayer.Center-npc.Center).Length()<1500&&CommonCondition) {
                 npc.AddBuff(ModContent.BuffType<ShelterNotification>(), 2);

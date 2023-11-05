@@ -35,7 +35,7 @@ Mods: {
 			}
 		}
 
-		RainDeathReason: погиб(-ла) под силами природы.
+		RainDeathReason: помер(-ла) в связи с погодными условиями.
 
 		Biomes: {
 			aDimRainSound: {
@@ -51,19 +51,11 @@ Mods: {
 
 		Buffs: {
 			ShelterNotification: {
-				Description: Дождь усилился! Скорее найдите убежище, чтобы предотвратить неминуемое!
+				Description: Дождь слишком тяжелый! Скорее найдите убежище, чтобы предотвратить неминуемое!
 				DisplayName: Кажется дождь начинается?
 			}
-
-			HeavyRainDebuff: {
-				// DisplayName: Heavy Rain Debuff
-				// Description: Mods.RainOverhaul.Buffs.HeavyRainDebuff.Description
-			}
 		}
 
-		Projectiles: {
-			// Proj.DisplayName: Proj
-			// RainCircle.DisplayName: Rain Circle
-		}
+		Projectiles.RainCircle.DisplayName: Сфера дождя
 	}
 }

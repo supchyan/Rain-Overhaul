@@ -21,8 +21,8 @@ Mods: {
 					Label: '''"Rain World" Mode'''
 					Tooltip:
 						'''
-						This switcher increases intensity of the rain to high values
-						making rain "heavy to stay alive". True "Rain World" experience!
+						This toggle increases intensity of the rain to upper values,
+						making the rain "heavy to stay alive". Like in "Rain World"!
 
 						[c/888888:Disables "{$RainConfig.Headers.RainIntensity}" parameter for everyone.]
 						◉ ◉ ◉ ◉ | ◌ ◌ ◌
@@ -34,7 +34,7 @@ Mods: {
 			}
 		}
 
-		RainDeathReason: died by nature forces.
+		RainDeathReason: died by virtue of the nature forces.
 
 		Biomes: {
 			aDimRainSound: {
@@ -50,19 +50,11 @@ Mods: {
 
 		Buffs: {
 			ShelterNotification: {
-				Description: Rain is too strong! Find shelter to prevent inevitable!
+				Description: The rain is too heavy! Find shelter quickly to prevent the inevitable!
 				DisplayName: It's raining somewhere else?
 			}
-
-			HeavyRainDebuff: {
-				DisplayName: Heavy Rain Debuff
-				Description: Mods.RainOverhaul.Buffs.HeavyRainDebuff.Description
-			}
 		}
 
-		Projectiles: {
-			Proj.DisplayName: Proj
-			RainCircle.DisplayName: Rain Circle
-		}
+		Projectiles.RainCircle.DisplayName: Rain Circle
 	}
 }
