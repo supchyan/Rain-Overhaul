@@ -22,7 +22,6 @@ namespace RainOverhaul.Content {
         public override void AI() {
             Projectile.timeLeft = 2;
             Player player = Main.player[Projectile.owner];
-
             for(int i=0; i<Main.maxNPCs; i++) {
                 Projectile.velocity = Main.npc[i].velocity;
                 Projectile.position = Main.npc[i].Center - new Vector2(Projectile.width/2f, Projectile.height/2f);
