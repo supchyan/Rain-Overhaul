@@ -37,7 +37,8 @@ namespace RainOverhaul.Content {
 
             // this should draws above entities under the rain,
             // when player in the save place
-            // Filters.Scene.Activate("RainCircle"); 
+            Filters.Scene.Activate("RainCircle"); 
+            Filters.Scene["RainFilter"].GetShader().UseOpacity(ModContent.GetInstance<RainConfigDev>().cProgress);
 
             // old stuff, but returns true, when player is standing 
             // before wall (collides it with it's body k?)

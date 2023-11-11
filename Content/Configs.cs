@@ -7,8 +7,6 @@ namespace RainOverhaul.Content {
 
         [Header("RainIntensity")]
         [DefaultValue(1)]
-        [DrawTicks]
-        [Increment(0.20f)]
         [Range(0f, 1f)]
         public float cIntensity;
     }
@@ -18,5 +16,12 @@ namespace RainOverhaul.Content {
         [Header("RainWorldExactly")]
         [DefaultValue(false)]
         public bool cRainWorld;
+    }
+    public class RainConfigDev:ModConfig {
+        public override ConfigScope Mode => ConfigScope.ClientSide;
+
+        [Header("CircleProps")]
+        [DefaultValue(8f)]
+        public float cProgress;
     }
 }

@@ -33,6 +33,31 @@ Mods: {
 						'''
 				}
 			}
+
+			RainConfigDev: {
+				// DisplayName: Rain Config Dev
+				// Headers.CircleProps: Circle Props Header
+
+				cIntensity: {
+					// Label: c Intensity
+					// Tooltip: ""
+				}
+
+				cOpacity: {
+					// Label: c Opacity
+					// Tooltip: ""
+				}
+
+				uIntensity: {
+					// Label: u Intensity
+					// Tooltip: ""
+				}
+
+				cProgress: {
+					// Label: c Progress
+					// Tooltip: ""
+				}
+			}
 		}
 
 		RainDeathReason: помер(-ла) в связи с погодными условиями.
