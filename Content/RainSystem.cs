@@ -28,6 +28,15 @@ namespace RainOverhaul.Content {
 
         // Rain logic
         public override void PostUpdateTime() {
+
+            if(ModContent.GetInstance<RainConfigDev>().cStartRain) {
+                Main.StartRain();
+                ModContent.GetInstance<RainConfigDev>().cStartRain = false;
+            }
+            if(ModContent.GetInstance<RainConfigDev>().cStopRain) {
+                Main.StopRain();
+                ModContent.GetInstance<RainConfigDev>().cStopRain = false;
+            }
             
             // Sync rain with server all time 
             Main.SyncRain();
@@ -38,10 +47,9 @@ namespace RainOverhaul.Content {
             // this should draws above entities under the rain,
             // when player in the save place
             Filters.Scene.Activate("RainCircle"); 
-            Filters.Scene["RainFilter"].GetShader().UseOpacity(ModContent.GetInstance<RainConfigDev>().cProgress);
+            Filters.Scene["RainFilter"].GetShader().UseOpacity(ModContent.GetInstance<RainConfigDev>().cShaderMUL);
 
-            // old stuff, but returns true, when player is standing 
-            // before wall (collides it with it's body k?)
+            // old stuff, but returns true, when player overlaps (collides) the wall vvv
             // Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             // bool WallCollision = tTile.WallType > WallID.None;
             

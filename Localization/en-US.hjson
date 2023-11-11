@@ -35,25 +35,39 @@ Mods: {
 
 			RainConfigDev: {
 				DisplayName: Rain Config Dev
-				Headers.CircleProps: Circle Props Header
 
-				cIntensity: {
-					Label: c Intensity
+				cCycleIndicatorPos: {
+					Label: Cycle Indicator position
+					Tooltip:
+						'''
+						Affects cycle indicator's position in the "Rain World" mode.
+						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+						'''
+				}
+
+				npcDefinitionExample: {
+					Label: What are you doing here?
 					Tooltip: ""
 				}
 
-				cOpacity: {
-					Label: c Opacity
+				Headers: {
+					TestFeatures: Test Features
+					RemoveItLater: Remove It Later
+					WeatherSettings: Weather Settings
+				}
+
+				cShaderMUL: {
+					Tooltip: ""
+					Label: Shader multiplier
+				}
+
+				cStartRain: {
+					Label: Start Rain
 					Tooltip: ""
 				}
 
-				uIntensity: {
-					Label: u Intensity
-					Tooltip: ""
-				}
-
-				cProgress: {
-					Label: c Progress
+				cStopRain: {
+					Label: Stop Rain
 					Tooltip: ""
 				}
 			}
