@@ -22,7 +22,7 @@ float2 uZoom;
 
 float4 RainFilter(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
     float velocity = 0.3f;
-    float forceX = 3.0f;
+    float forceX = 5.0f; // changed it to make more rainworldy
     float forceY = 0.01f;
 
     float4 distort = tex2D(uImage1, float2(

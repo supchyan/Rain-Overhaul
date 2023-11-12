@@ -45,7 +45,7 @@ float4 RainCircle(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
     
     return float4(tex,1.0)+float4(raintex*smoothstep(1.0,0.99,circle),1.0)+float4(tex*smoothstep(0.85,1.0,circle),1.0);
 }
-technique Technique1 {
+technique Technique3 {
     pass RainCircle {
         PixelShader = compile ps_2_0 RainCircle();
     }

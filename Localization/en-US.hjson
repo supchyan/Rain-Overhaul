@@ -63,12 +63,12 @@ Mods: {
 
 				cStartRain: {
 					Label: Start Rain
-					Tooltip: ""
+					Tooltip: Generates rain for debugging
 				}
 
 				cStopRain: {
 					Label: Stop Rain
-					Tooltip: ""
+					Tooltip: Stops rain for debugging
 				}
 			}
 		}
@@ -84,6 +84,11 @@ Mods: {
 			aRainSound: {
 				DisplayName: ""
 				TownNPCDialogueName: ""
+			}
+
+			aQuakeSound: {
+				DisplayName: a Quake Sound
+				TownNPCDialogueName: the a Quake Sound
 			}
 		}
 

@@ -54,7 +54,7 @@ Mods: {
 				Headers: {
 					// TestFeatures: Test Features
 					// RemoveItLater: Remove It Later
-					// WeatherSettings: Weather Settings Header
+					// WeatherSettings: Weather Settings
 				}
 
 				cShaderMUL: {
@@ -63,13 +63,13 @@ Mods: {
 				}
 
 				cStartRain: {
-					// Label: c Start Rain
-					// Tooltip: ""
+					// Label: Start Rain
+					// Tooltip: Generates rain for debugging
 				}
 
 				cStopRain: {
-					// Label: c Stop Rain
-					// Tooltip: ""
+					// Label: Stop Rain
+					// Tooltip: Stops rain for debugging
 				}
 			}
 		}
@@ -85,6 +85,11 @@ Mods: {
 			aRainSound: {
 				DisplayName: ""
 				TownNPCDialogueName: ""
+			}
+
+			aQuakeSound: {
+				// DisplayName: a Quake Sound
+				// TownNPCDialogueName: the a Quake Sound
 			}
 		}
 
