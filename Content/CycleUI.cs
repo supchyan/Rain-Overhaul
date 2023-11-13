@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using System;
 
 namespace RainOverhaul.Content {
     public class CycleUIState : UIState {
@@ -49,33 +50,39 @@ namespace RainOverhaul.Content {
             IconRect(cQuake, xPos, yPos, IconWidth,IconHeight);
             IconRect(cRain, xPos, yPos, IconWidth,IconHeight);
 
-			if(RainSystem.CycleState == RainSystem.CycleClear) {
-				
-			}
-
 			LocalTimeForAnimation++;
 			if(OldCycleState != RainSystem.CycleState) {
 				OldCycleState = RainSystem.CycleState;
 				LocalTimeForAnimation = 1;
-				
+
 				SoundEngine.PlaySound(sCycleSwap);
 			}
 
+			float e = 2.71828f;
+			float IconScale = 0.7f + LocalTimeForAnimation/960f;
+			Color IconOpacity = Color.White*(1f/(float)Math.Pow(LocalTimeForAnimation/40f, e));
+
 			switch (RainSystem.CycleState) { 
 				case RainSystem.CycleClear: {
-					if(LocalTimeForAnimation/120f < 1f) cClear.Color = Color.White*(1f - LocalTimeForAnimation/120f);
+					cClear.Color = IconOpacity;
+					cClear.ImageScale = IconScale;
+
 					cQuake.Color = Color.White*0f;
 					cRain.Color = Color.White*0f;
 				} break;
 
 				case RainSystem.CycleQuake: {
-					if(LocalTimeForAnimation/120f < 1f) cQuake.Color = Color.White*(1f - LocalTimeForAnimation/120f);
+					cQuake.Color = IconOpacity;
+					cQuake.ImageScale = IconScale;
+
 					cClear.Color = Color.White*0f;
 					cRain.Color = Color.White*0f;
 				} break;
 
 				case RainSystem.CycleRain: {
-					if(LocalTimeForAnimation/120f < 1f) cRain.Color = Color.White*(1f - LocalTimeForAnimation/120f);
+					cRain.Color = IconOpacity;
+					cRain.ImageScale = IconScale;
+
 					cClear.Color = Color.White*0f;
 					cQuake.Color = Color.White*0f;
 				} break;

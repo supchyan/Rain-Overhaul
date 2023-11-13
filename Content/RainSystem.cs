@@ -8,9 +8,13 @@ using Terraria.Audio;
 using Terraria.Localization;
 
 namespace RainOverhaul.Content {
-    public class ForcedRainSync:ModPlayer {
+    public class PlayerTools:ModPlayer {
+        SoundStyle sEnter = new SoundStyle("RainOverhaul/Content/Sounds/sEnter");
         public override void OnEnterWorld() {
+            if(ModContent.GetInstance<RainConfig>().cRainWorld) SoundEngine.PlaySound(sEnter);
+            
             RainSystem.CycleState = RainSystem.CycleClear;
+
             if (Main.netMode == NetmodeID.Server && Main.maxRaining == 0) {
                 Main.StartRain();
                 Main.SyncRain();
@@ -45,6 +49,7 @@ namespace RainOverhaul.Content {
 
         // Rain logic
         public override void PostUpdateTime() {
+            // Main.NewText(Main.windSpeedCurrent);
 
             // Affects vanilla rain state in game
             if(ModContent.GetInstance<RainConfigDev>().cStartRain) {
@@ -106,7 +111,7 @@ namespace RainOverhaul.Content {
                     if(RainTransition > 0f) RainTransition-=0.005f;
                 }
 
-                Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition);
+                Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition).UseProgress(Main.windSpeedCurrent);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(0f).UseIntensity(0f);
                 
             } else {
@@ -125,7 +130,7 @@ namespace RainOverhaul.Content {
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                 }
 
-                Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce);
+                Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce).UseProgress(Main.windSpeedCurrent);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(CycleQuakeImpulse).UseIntensity(3.7f);
 
                 bool RainWorldCondition = (Main.LocalPlayer.ZoneRain || Main.LocalPlayer.ZoneForest || Main.LocalPlayer.ZoneJungle || Main.LocalPlayer.ZoneDesert || Main.LocalPlayer.ZoneCrimson || Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneBeach || Main.LocalPlayer.ZoneHallow || Main.LocalPlayer.ZoneMeteor) && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;

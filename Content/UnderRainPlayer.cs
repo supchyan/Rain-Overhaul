@@ -8,7 +8,7 @@ using ReLogic.Utilities;
 
 namespace RainOverhaul.Content {
     public class UnderRainPlayer:ModPlayer {
-        private SoundStyle DeathSound = new SoundStyle("RainOverhaul/Content/Sounds/sDeath");
+        private SoundStyle sDeath = new SoundStyle("RainOverhaul/Content/Sounds/sDeath");
         public SlotId TUUM;
         // Damage control of Players under the rain 
         public override void UpdateBadLifeRegen() {
@@ -23,7 +23,7 @@ namespace RainOverhaul.Content {
             return true;
         }
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
-            TUUM = SoundEngine.PlaySound(DeathSound with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, Player.Center);
+            TUUM = SoundEngine.PlaySound(sDeath with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, Player.Center);
             // damageSource = PlayerDeathReason.ByCustomReason(Player.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason"));
         }
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
