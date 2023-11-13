@@ -26,7 +26,7 @@ float4 RainFilter(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
     float forceY = 0.01f;
 
     float4 distort = tex2D(uImage1, float2(
-        uv.x * forceX + uv.y * (uProgress + sin(uTime)/4.0f),
+        uv.x * forceX + uv.y * (uProgress + sin(2.0f*uTime)/8.0f),
         uv.y * forceY + uTime * velocity
     ));
     float2 rainVec = (uv.xy - distort.xy*uOpacity);
