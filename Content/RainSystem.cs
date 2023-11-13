@@ -11,7 +11,7 @@ namespace RainOverhaul.Content {
     public class PlayerTools:ModPlayer {
         SoundStyle sEnter = new SoundStyle("RainOverhaul/Content/Sounds/sEnter");
         public override void OnEnterWorld() {
-            if(ModContent.GetInstance<RainConfig>().cRainWorld) SoundEngine.PlaySound(sEnter);
+            if(ModContent.GetInstance<RainConfigServer>().cRainWorld) SoundEngine.PlaySound(sEnter);
             
             RainSystem.CycleState = RainSystem.CycleClear;
 
@@ -100,7 +100,7 @@ namespace RainOverhaul.Content {
 
             // Filters.Scene["RainShake"].GetShader().UseOpacity(ShakeTransition*1.07f).UseIntensity(3.7f);
 
-            if(!ModContent.GetInstance<RainConfig>().cRainWorld) {
+            if(!ModContent.GetInstance<RainConfigServer>().cRainWorld) {
                 // null custom rain behavior
                 CycleState = CycleClear;
                 
@@ -111,15 +111,10 @@ namespace RainOverhaul.Content {
                     if(RainTransition > 0f) RainTransition-=0.005f;
                 }
 
-                Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition).UseProgress(Main.windSpeedCurrent);
+                Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition).UseProgress(Main.windSpeedCurrent*2.0f);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(0f).UseIntensity(0f);
                 
             } else {
-
-                if(Main.netMode != NetmodeID.SinglePlayer) {
-                    Main.NewText("[c/ffff00:Rain Overhaul# ]" + Language.GetTextValue("Mods.RainOverhaul.Messages.RainWorldModeMessage"));
-                }
-
                 // this controls sound effects to a rain system
                 QuakeSoundCondition = CycleState == CycleQuake;
                 RainSoundCondition = CommonCondition;
@@ -130,7 +125,7 @@ namespace RainOverhaul.Content {
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                 }
 
-                Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce).UseProgress(Main.windSpeedCurrent);
+                Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce).UseProgress(Main.windSpeedCurrent*2.0f);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(CycleQuakeImpulse).UseIntensity(3.7f);
 
                 bool RainWorldCondition = (Main.LocalPlayer.ZoneRain || Main.LocalPlayer.ZoneForest || Main.LocalPlayer.ZoneJungle || Main.LocalPlayer.ZoneDesert || Main.LocalPlayer.ZoneCrimson || Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneBeach || Main.LocalPlayer.ZoneHallow || Main.LocalPlayer.ZoneMeteor) && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;

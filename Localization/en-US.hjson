@@ -1,13 +1,11 @@
 Mods: {
 	RainOverhaul: {
-		Messages.RainWorldModeMessage: If you will face with bugs in this mode, please, notify me on workshop page.
-
 		Configs: {
 			RainConfig: {
 				DisplayName: Rain Overhaul Properties
 
 				Headers: {
-					RainSettings: Common settings
+					RainSettings: Settings
 					RainWorldExactly: Additionals
 				}
 
@@ -15,20 +13,8 @@ Mods: {
 					Label: Rain intensity
 					Tooltip:
 						'''
-						As less this parameter, as less mod rain effects.
+						As less this parameter, as less rain effects.
 						◉ ◉ ◉ ◌ | ◌ ◌ ◌
-						'''
-				}
-
-				cRainWorld: {
-					Label: '''"Rain World" Mode'''
-					Tooltip:
-						'''
-						This toggle adds cycles, which completely reworks rain system.
-						Run and hide to stay alive, like in "Rain World"!
-
-						[c/888888:Disables "{$cIntensity.Label}" parameter.]
-						◉ ◉ ◉ ◉ | ◌ ◌ ◌
 						'''
 				}
 
@@ -37,6 +23,23 @@ Mods: {
 					Tooltip:
 						'''
 						Affects position of the cycle indicator in the "Rain World" mode.
+						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+						'''
+				}
+			}
+
+			RainConfigServer: {
+				DisplayName: Rain Overhaul World Properties
+				Headers.RainSettingsServer: World Settings
+
+				cRainWorld: {
+					Label: '''"Rain World" Mode'''
+					Tooltip:
+						'''
+						This toggle adds cycles, which completely reworks rain system.
+						Run and hide to stay alive, like in "Rain World"!
+
+						[c/888888:Disables "{$RainConfig.cIntensity.Label}" parameter.]
 						◉ ◉ ◉ ◉ | ◉ ◌ ◌
 						'''
 				}

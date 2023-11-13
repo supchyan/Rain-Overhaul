@@ -12,9 +12,9 @@ namespace RainOverhaul {
 			Filters.Scene["RainFilter"] = new Filter(new ScreenShaderData(RainRef, "RainFilter"), EffectPriority.VeryHigh);
 			Filters.Scene["RainFilter"].Load();
 
-			// Ref<Effect> RainBubbleRef = new Ref<Effect>(ModContent.Request<Effect>("RainOverhaul/Content/Effects/RainBubble", AssetRequestMode.ImmediateLoad).Value);
-			// Filters.Scene["RainBubble"] = new Filter(new ScreenShaderData(RainBubbleRef, "RainBubble"), EffectPriority.VeryHigh);
-			// Filters.Scene["RainBubble"].Load();
+			Ref<Effect> RainBubbleRef = new Ref<Effect>(ModContent.Request<Effect>("RainOverhaul/Content/Effects/RainBubble", AssetRequestMode.ImmediateLoad).Value);
+			Filters.Scene["RainBubble"] = new Filter(new ScreenShaderData(RainBubbleRef, "RainBubble"), EffectPriority.VeryHigh);
+			Filters.Scene["RainBubble"].Load();
 
 			Ref<Effect> ShakeRef = new Ref<Effect>(ModContent.Request<Effect>("RainOverhaul/Content/Effects/RainShake", AssetRequestMode.ImmediateLoad).Value);
 			Filters.Scene["RainShake"] = new Filter(new ScreenShaderData(ShakeRef, "RainShake"), EffectPriority.VeryHigh);

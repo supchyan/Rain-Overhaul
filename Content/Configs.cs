@@ -20,11 +20,15 @@ namespace RainOverhaul.Content {
         public float cIntensity;
 
         [Header("RainWorldExactly")]
-        [DefaultValue(false)]
-        public bool cRainWorld;
-
         [DefaultValue(typeof(Vector2), "0.04, 0.9")]
         public Vector2 cCycleIndicatorPos;
+    }
+    public class RainConfigServer:ModConfig {
+        public override ConfigScope Mode => ConfigScope.ServerSide;
+
+        [Header("RainSettingsServer")]
+        [DefaultValue(false)]
+        public bool cRainWorld;
     }
     public class RainConfigDev:ModConfig {
         public override ConfigScope Mode => ConfigScope.ClientSide;

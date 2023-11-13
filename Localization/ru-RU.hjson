@@ -1,13 +1,11 @@
 Mods: {
 	RainOverhaul: {
-		Messages.RainWorldModeMessage: Если вы столкнетесь с ошибками в этом режиме, пожалуйста, дайте мне знать на странице в мастерской.
-
 		Configs: {
 			RainConfig: {
 				DisplayName: Rain Overhaul Параметры
 
 				Headers: {
-					RainSettings: Основные настройки
+					RainSettings: Настройки
 					RainWorldExactly: Дополнительно
 				}
 
@@ -15,10 +13,24 @@ Mods: {
 					Label: Интенсивность дождя
 					Tooltip:
 						'''
-						Чем меньше этот параметр, тем слабее эффект модана экране.
+						Чем меньше этот параметр, тем слабее эффект от дождя на экране.
 						◉ ◉ ◉ ◌ | ◌ ◌ ◌
 						'''
 				}
+
+				cCycleIndicatorPos: {
+					Label: Положение индикатора циклов
+					Tooltip:
+						'''
+						Меняет положение индикатора циклов в режиме "Rain World".
+						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+						'''
+				}
+			}
+
+			RainConfigServer: {
+				DisplayName: Rain Overhaul Параметры Мира
+				Headers.RainSettingsServer: Настройки Мира
 
 				cRainWorld: {
 					Label: Режим "Rain World"
@@ -28,16 +40,7 @@ Mods: {
 						дождь "тяжелым для выживания". Прячтесь от искусственной стихии,
 						почти как в "Rain World"!
 
-						[c/888888:Делает параметр "{$cIntensity.Label}" фиктивным.]
-						◉ ◉ ◉ ◉ | ◌ ◌ ◌
-						'''
-				}
-
-				cCycleIndicatorPos: {
-					Label: Положение индикатора циклов
-					Tooltip:
-						'''
-						Меняет положение индикатора циклов в режиме "Rain World".
+						[c/888888:Делает параметр "{$RainConfig.cIntensity.Label}" фиктивным.]
 						◉ ◉ ◉ ◉ | ◉ ◌ ◌
 						'''
 				}

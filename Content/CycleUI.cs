@@ -90,7 +90,7 @@ namespace RainOverhaul.Content {
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
-			if (ModContent.GetInstance<RainConfig>().cRainWorld) {
+			if (ModContent.GetInstance<RainConfigServer>().cRainWorld) {
 				base.Draw(spriteBatch);
 			}
 		}
