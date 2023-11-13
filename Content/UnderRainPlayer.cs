@@ -10,7 +10,6 @@ namespace RainOverhaul.Content {
     public class UnderRainPlayer:ModPlayer {
         private SoundStyle DeathSound = new SoundStyle("RainOverhaul/Content/Sounds/sDeath");
         public SlotId TUUM;
-        
         // Damage control of Players under the rain 
         public override void UpdateBadLifeRegen() {
             float rIntensity = 550*Main.maxRaining/(20.0f * 645.0f)*2.5f;

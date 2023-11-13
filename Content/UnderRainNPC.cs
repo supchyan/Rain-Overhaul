@@ -39,7 +39,7 @@ namespace RainOverhaul.Content {
             }
             
             bool CommonCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
-            if(ModContent.GetInstance<RainConfigAdditions>().cRainWorld&&Main.raining&&!NPCinSafePlace&&(Main.LocalPlayer.Center-npc.Center).Length()<1500&&CommonCondition) {
+            if(ModContent.GetInstance<RainConfig>().cRainWorld&&Main.raining&&!NPCinSafePlace&&(Main.LocalPlayer.Center-npc.Center).Length()<1500&&CommonCondition) {
                 npc.AddBuff(ModContent.BuffType<ShelterNotification>(), 2);
             }
         }

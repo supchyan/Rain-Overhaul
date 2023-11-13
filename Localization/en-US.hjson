@@ -1,49 +1,49 @@
 Mods: {
 	RainOverhaul: {
+		Messages.RainWorldModeMessage: If you will face with bugs in this mode, please, notify me on workshop page.
+
 		Configs: {
 			RainConfig: {
 				DisplayName: Rain Overhaul Properties
 
-				cIntensity: {
-					Header: ""
-					Label: Value
-					Tooltip: ""
+				Headers: {
+					RainSettings: Common settings
+					RainWorldExactly: Additionals
 				}
 
-				Headers.RainIntensity: Rain intensity
-			}
-
-			RainConfigAdditions: {
-				DisplayName: Rain Overhaul Additionals
-				Headers.RainWorldExactly: Additionals
+				cIntensity: {
+					Label: Rain intensity
+					Tooltip:
+						'''
+						As less this parameter, as less mod rain effects.
+						◉ ◉ ◉ ◌ | ◌ ◌ ◌
+						'''
+				}
 
 				cRainWorld: {
 					Label: '''"Rain World" Mode'''
 					Tooltip:
 						'''
-						This toggle increases intensity of the rain to upper values,
-						making the rain "heavy to stay alive". Like in "Rain World"!
+						This toggle adds cycles, which completely reworks rain system.
+						Run and hide to stay alive, like in "Rain World"!
 
-						[c/888888:Disables "{$RainConfig.Headers.RainIntensity}" parameter for everyone.]
+						[c/888888:Disables "{$cIntensity.Label}" parameter.]
 						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+						'''
+				}
 
-						[c/ffff00:Works in multiplayer, but I highly suggest to wait, until I'll find way]
-						[c/ffff00:to make this game mechanic better in multiplayer from the game-design side.]
+				cCycleIndicatorPos: {
+					Label: Cycle Indicator position
+					Tooltip:
+						'''
+						Affects position of the cycle indicator in the "Rain World" mode.
+						◉ ◉ ◉ ◉ | ◉ ◌ ◌
 						'''
 				}
 			}
 
 			RainConfigDev: {
 				DisplayName: Rain Config Dev
-
-				cCycleIndicatorPos: {
-					Label: Cycle Indicator position
-					Tooltip:
-						'''
-						Affects cycle indicator's position in the "Rain World" mode.
-						◉ ◉ ◉ ◉ | ◌ ◌ ◌
-						'''
-				}
 
 				npcDefinitionExample: {
 					Label: What are you doing here?
@@ -99,6 +99,9 @@ Mods: {
 			}
 		}
 
-		Projectiles.RainCircle.DisplayName: Rain Circle
+		Projectiles: {
+			RainCircle.DisplayName: Rain Circle
+			RainBubble.DisplayName: Rain Bubble
+		}
 	}
 }

@@ -20,7 +20,7 @@ float uSaturation;
 float4 uSourceRect;
 float2 uZoom;
 
-float4 RainCircle(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+float4 RainBubble(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
     float4 rain = tex2D(uImage0, uv);
     rain.rgb = float3(0.0, 0.0, 0.0);
 
@@ -41,12 +41,12 @@ float4 RainCircle(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
     float2(uScreenResolution.x*xMUL,uScreenResolution.y*yMUL))
     /uScreenResolution.y;
 
-    float circle = length(newuv/2.0);
+    float bubble = length(newuv/2.0);
     
-    return float4(tex,1.0)+float4(raintex*smoothstep(1.0,0.99,circle),1.0)+float4(tex*smoothstep(0.85,1.0,circle),1.0);
+    return float4(tex,1.0)+float4(raintex*smoothstep(1.0,0.99,bubble),1.0)+float4(tex*smoothstep(0.85,1.0,bubble),1.0);
 }
 technique Technique3 {
-    pass RainCircle {
-        PixelShader = compile ps_2_0 RainCircle();
+    pass RainBubble {
+        PixelShader = compile ps_2_0 RainBubble();
     }
 }

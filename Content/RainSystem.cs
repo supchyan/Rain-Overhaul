@@ -5,14 +5,12 @@ using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace RainOverhaul.Content {
     public class ForcedRainSync:ModPlayer {
         public override void OnEnterWorld() {
-            Main.StopRain();
-            Main.maxRaining = 0;
-            Main.raining = false;
-
+            RainSystem.CycleState = RainSystem.CycleClear;
             if (Main.netMode == NetmodeID.Server && Main.maxRaining == 0) {
                 Main.StartRain();
                 Main.SyncRain();
@@ -31,24 +29,19 @@ namespace RainOverhaul.Content {
         public static bool RainSoundCondition;
         public static bool DimRainSoundCondition;
 
-        public static int CycleTime; 
-
         public const int CycleClear = 0;
         public const int CycleQuake = 1;
         public const int CycleRain = 2; 
 
-        public int CycleClearTime = 1500; // time when is clear // 108000
-        public int CycleQuakeTime = 2300; // time when is quaking // 2300
-        public int CycleRainTime = 1500; // time when is raining // 36000
-        public int CycleState = 0; // (clear / quake / raining) check consts above ^^^
+        // yes, description is correct, 'cause of switch loop in code below vvv
+        public const int CycleClearTimeEnd = 51700; // time when quake starts 
+        public const int CycleQuakeTimeEnd = 53999; // time when rain starts 
+        public const int CycleRainTimeEnd = 16200; // time when clear starts
+
+        public static int CycleState; // (clear / quake / raining) check consts above ^^^
         public float CycleRainForce;
         public float CycleQuakeStrength;
         public float CycleQuakeImpulse;
-
-        public SoundStyle sCycleSwap = new SoundStyle("RainOverhaul/Content/Sounds/sCycleSwap");
-        public bool PlayCycleSound; // condition to play sound above ^^^
-
-
 
         // Rain logic
         public override void PostUpdateTime() {
@@ -102,9 +95,8 @@ namespace RainOverhaul.Content {
 
             // Filters.Scene["RainShake"].GetShader().UseOpacity(ShakeTransition*1.07f).UseIntensity(3.7f);
 
-            if(!ModContent.GetInstance<RainConfigAdditions>().cRainWorld) {
+            if(!ModContent.GetInstance<RainConfig>().cRainWorld) {
                 // null custom rain behavior
-                CycleTime = 0;
                 CycleState = CycleClear;
                 
                 if(RainCondition) {
@@ -119,6 +111,10 @@ namespace RainOverhaul.Content {
                 
             } else {
 
+                if(Main.netMode != NetmodeID.SinglePlayer) {
+                    Main.NewText("[c/ffff00:Rain Overhaul# ]" + Language.GetTextValue("Mods.RainOverhaul.Messages.RainWorldModeMessage"));
+                }
+
                 // this controls sound effects to a rain system
                 QuakeSoundCondition = CycleState == CycleQuake;
                 RainSoundCondition = CommonCondition;
@@ -129,10 +125,6 @@ namespace RainOverhaul.Content {
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                 }
 
-                CycleTime++;
-
-                // Main.NewText(CycleTime);
-
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(CycleQuakeImpulse).UseIntensity(3.7f);
 
@@ -141,45 +133,49 @@ namespace RainOverhaul.Content {
                 // Custom rain behavior when in "RainWorld" mode
                 switch(CycleState) {
                     case CycleClear: {
-                        Main.StopRain();
                         Main.raining = false;
 
                         if(CycleQuakeImpulse > 0f) CycleQuakeImpulse -= 0.05f;
                         if(CycleRainForce > 0f) CycleRainForce -= 0.01f;
 
-                        if(Main.maxRaining != 0f) Main.maxRaining = 0.01f;
+                        if(Main.maxRaining != 0f) Main.maxRaining = 0f;
 
-                        if(CycleTime >= CycleClearTime) {
-                            SoundEngine.PlaySound(sCycleSwap);
-
-                            CycleTime = 0;
+                        // cycle state swap
+                        if(Main.time >= CycleClearTimeEnd && Main.IsItDay()) {
                             CycleState = CycleQuake;
                         }
-
-                    } break;
-
-                    case CycleQuake: {
-
-                        CycleQuakeStrength = 1f + CycleTime/1000f;
-                        
-                        if(RainWorldCondition) CycleQuakeImpulse = ((float)Math.Sin(MathHelper.ToRadians(CycleTime/2f)))*CycleQuakeStrength;
-                        else { if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -=0.1f; }
-
-                        if(CycleTime >= CycleQuakeTime) {
-                            CycleTime = 0;
+                        if(Main.time < CycleRainTimeEnd && !Main.IsItDay()) {
                             CycleState = CycleRain;
                         }
 
                     } break;
 
-                    case CycleRain: {                        
-                        Main.StartRain();
-                        Main.raining = true;
+                    case CycleQuake: {
+                        Main.raining = false;
+
+                        CycleQuakeStrength = 1f + (float)(Main.time - CycleClearTimeEnd) / (float)(Main.dayLength - CycleClearTimeEnd);
+                        
+                        if(RainWorldCondition) CycleQuakeImpulse = ((float)Math.Sin(MathHelper.ToRadians((float)(Main.time - CycleClearTimeEnd) / 2f))) * CycleQuakeStrength;
+                        else { if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -= 0.1f; } // if player left certain biome, stop the quake
+                        if(CycleRainForce > 0.0f) CycleRainForce -= 0.01f;
+                        if(Main.maxRaining != 0f) Main.maxRaining = 0f;
+
+                        // cycle state swap
+                        if((Main.time < CycleClearTimeEnd && Main.IsItDay()) || (Main.time >= CycleRainTimeEnd && !Main.IsItDay())) {
+                            CycleState = CycleClear;
+                        }
+                        if(Main.time < CycleRainTimeEnd && !Main.IsItDay()) {
+                            CycleState = CycleRain;
+                        }
+
+                    } break;
+
+                    case CycleRain: {
+                        if (!Main.raining) Main.StartRain();
+
                         if(RainWorldCondition) {
                             if(!PlayerInSafePlace) {
-                                if(CycleQuakeImpulse < 5.07f) CycleQuakeImpulse += 0.1f;
-                                else CycleQuakeImpulse -= 0.1f;
-
+                                if(CycleQuakeImpulse != 5.07f) CycleQuakeImpulse = 5.07f;
                                 if(CycleRainForce < 1.0f) CycleRainForce += 0.01f;
 
                             } else {
@@ -189,17 +185,18 @@ namespace RainOverhaul.Content {
                                 if(CycleRainForce > 0.0f) CycleRainForce -= 0.01f;
                             }
                         } else {
-                            if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -=0.1f;
+                            if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -= 0.1f;
                             if(CycleRainForce > 0.0f) CycleRainForce -= 0.01f;
                         }
 
                         if(Main.maxRaining != 0.97f) Main.maxRaining = 0.97f;
 
-                        if(CycleTime >= CycleRainTime) {
-                            SoundEngine.PlaySound(sCycleSwap);
-
-                            CycleTime = 0;
+                        // cycle state swap
+                        if((Main.time >= CycleRainTimeEnd && !Main.IsItDay()) || (Main.time < CycleClearTimeEnd && Main.IsItDay())) {
                             CycleState = CycleClear;
+                        }
+                        if(Main.time >= CycleClearTimeEnd && Main.IsItDay()) {
+                            CycleState = CycleQuake;
                         }
 
                     } break;
@@ -208,7 +205,7 @@ namespace RainOverhaul.Content {
                 // drawing circle with shader from above comment
                 // for(int i=0; i<Main.maxNPCs; i++) {
                 //     if(!Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.npc[i].active && Main.npc[i].HasBuff<ShelterNotification>()) {
-                //         Projectile.NewProjectile(Entity.GetSource_None(), Main.npc[i].Center, Main.npc[i].velocity, ModContent.ProjectileType<RainCircle>(), 0, 0, Main.LocalPlayer.whoAmI);
+                //         Projectile.NewProjectile(Entity.GetSource_None(), Main.npc[i].Center, Main.npc[i].velocity, ModContent.ProjectileType<RainBubble>(), 0, 0, Main.LocalPlayer.whoAmI);
                 //     }
                 // }
                 

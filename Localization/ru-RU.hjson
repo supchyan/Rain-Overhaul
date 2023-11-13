@@ -1,50 +1,50 @@
 Mods: {
 	RainOverhaul: {
+		Messages.RainWorldModeMessage: Если вы столкнетесь с ошибками в этом режиме, пожалуйста, дайте мне знать на странице в мастерской.
+
 		Configs: {
 			RainConfig: {
 				DisplayName: Rain Overhaul Параметры
 
-				cIntensity: {
-					Header: ""
-					Label: Значение
-					Tooltip: ""
+				Headers: {
+					RainSettings: Основные настройки
+					RainWorldExactly: Дополнительно
 				}
 
-				Headers.RainIntensity: Интенсивность дождя
-			}
-
-			RainConfigAdditions: {
-				DisplayName: Rain Overhaul Дополнения
-				Headers.RainWorldExactly: Дополнения
+				cIntensity: {
+					Label: Интенсивность дождя
+					Tooltip:
+						'''
+						Чем меньше этот параметр, тем слабее эффект модана экране.
+						◉ ◉ ◉ ◌ | ◌ ◌ ◌
+						'''
+				}
 
 				cRainWorld: {
 					Label: Режим "Rain World"
 					Tooltip:
 						'''
-						Этот переключатель увеличивает силу дождя до максимума,
-						делая его "тяжелым для выживания". Почти, как в "Rain World"!
+						Этот переключатель включает систему циклов, которая делает
+						дождь "тяжелым для выживания". Прячтесь от искусственной стихии,
+						почти как в "Rain World"!
 
-						[c/888888:Отключает параметр "{$RainConfig.Headers.RainIntensity}" для всех игроков.]
+						[c/888888:Делает параметр "{$cIntensity.Label}" фиктивным.]
 						◉ ◉ ◉ ◉ | ◌ ◌ ◌
+						'''
+				}
 
-						[c/ffff00:Работает в мультиплеере, но я настоятельно советую подождать,]
-						[c/ffff00:пока я не найду способ сделать эту механику в мультиплеере лучше]
-						[c/ffff00:с точки зрения гейм-дизайна.]
+				cCycleIndicatorPos: {
+					Label: Положение индикатора циклов
+					Tooltip:
+						'''
+						Меняет положение индикатора циклов в режиме "Rain World".
+						◉ ◉ ◉ ◉ | ◉ ◌ ◌
 						'''
 				}
 			}
 
 			RainConfigDev: {
 				// DisplayName: Rain Config Dev
-
-				cCycleIndicatorPos: {
-					// Label: Cycle Indicator position
-					/* Tooltip:
-						'''
-						Affects cycle indicator's position in the "Rain World" mode.
-						◉ ◉ ◉ ◉ | ◌ ◌ ◌
-						''' */
-				}
 
 				npcDefinitionExample: {
 					// Label: What are you doing here?
@@ -100,6 +100,9 @@ Mods: {
 			}
 		}
 
-		Projectiles.RainCircle.DisplayName: Сфера дождя
+		Projectiles: {
+			RainCircle.DisplayName: Сфера дождя
+			// RainBubble.DisplayName: Rain Bubble
+		}
 	}
 }
