@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RainOverhaul.Content {
     public class RainCircle:ModProjectile {
-        public override string Texture => "RainOverhaul/Content/Texture/WIP";
+        public override string Texture => "RainOverhaul/Content/Textures/WIP";
         public override void SetDefaults() {
             Projectile.width = 17;
             Projectile.height = 18;

@@ -8,7 +8,7 @@ namespace RainOverhaul.Content {
     public class ShelterNotification:ModBuff {
         
         // Buff notification and heavy rain's consequences
-        public override string Texture => "RainOverhaul/Content/Texture/ShelterIcon";
+        public override string Texture => "RainOverhaul/Content/Textures/ShelterIcon";
         public override void SetStaticDefaults() {
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;
