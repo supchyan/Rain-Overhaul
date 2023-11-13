@@ -111,7 +111,7 @@ namespace RainOverhaul.Content {
                     if(RainTransition > 0f) RainTransition-=0.005f;
                 }
 
-                Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition).UseProgress(Main.windSpeedCurrent*2.0f);
+                Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition*Extra).UseIntensity(RainTransition).UseProgress(-Main.windSpeedCurrent*4.0f);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(0f).UseIntensity(0f);
                 
             } else {
@@ -125,7 +125,7 @@ namespace RainOverhaul.Content {
                     if(fValue > 0) Main.LocalPlayer.AddBuff(ModContent.BuffType<ShelterNotification>(),2);
                 }
 
-                Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce).UseProgress(Main.windSpeedCurrent*2.0f);
+                Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce).UseProgress(-Main.windSpeedCurrent*4.0f);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(CycleQuakeImpulse).UseIntensity(3.7f);
 
                 bool RainWorldCondition = (Main.LocalPlayer.ZoneRain || Main.LocalPlayer.ZoneForest || Main.LocalPlayer.ZoneJungle || Main.LocalPlayer.ZoneDesert || Main.LocalPlayer.ZoneCrimson || Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneBeach || Main.LocalPlayer.ZoneHallow || Main.LocalPlayer.ZoneMeteor) && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
