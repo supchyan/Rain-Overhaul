@@ -1,13 +1,5 @@
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
-using System;
-
-using Terraria.ID;
-
-using Terraria.Graphics.Effects;
-using Microsoft.Xna.Framework;
-
 
 namespace RainOverhaul.Content {
     

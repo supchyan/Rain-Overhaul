@@ -1,8 +1,5 @@
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
-using ReLogic.Utilities;
-
 
 namespace RainOverhaul.Content {
     public class ShelterNotification:ModBuff {

@@ -5,9 +5,8 @@ using Terraria.ModLoader;
 using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using System;
+using System.Collections.Generic;
 
 namespace RainOverhaul.Content {
     public class CycleUIState : UIState {

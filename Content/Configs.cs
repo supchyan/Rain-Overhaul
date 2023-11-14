@@ -1,14 +1,6 @@
 using System.ComponentModel;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Localization;
 using Terraria.ModLoader.Config;
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
-using System.Linq;
-
 
 namespace RainOverhaul.Content {
     public class RainConfig:ModConfig {

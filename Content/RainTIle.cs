@@ -1,6 +1,5 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace RainOverhaul.Content {
     public class RainTile {

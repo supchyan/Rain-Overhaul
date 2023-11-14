@@ -22,7 +22,7 @@ Mods: {
 					Label: Cycle Indicator position
 					Tooltip:
 						'''
-						Affects position of the cycle indicator in the "Rain World" mode.
+						Affects position of the cycle's indicator in the "Rain World" mode.
 						◉ ◉ ◉ ◉ | ◌ ◌ ◌
 						'''
 				}
