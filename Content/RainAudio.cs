@@ -9,7 +9,7 @@ namespace RainOverhaul.Content {
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sRain");
 
         public override bool IsBiomeActive(Player player) {
-            if(RainSystem.RainSoundCondition) {
+            if(RainSystem.RainSoundCondition && ModContent.GetInstance<RainConfigServer>().cRainWorld) {
                 return true;
             } else return false;
         }
@@ -18,7 +18,7 @@ namespace RainOverhaul.Content {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sDimRain");
         public override bool IsBiomeActive(Player player) {
-            if(RainSystem.DimRainSoundCondition) {
+            if(RainSystem.DimRainSoundCondition && ModContent.GetInstance<RainConfigServer>().cRainWorld) {
                 return true;
             } else return false;
         }
