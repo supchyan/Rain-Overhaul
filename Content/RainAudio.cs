@@ -4,16 +4,6 @@ using Terraria.ModLoader;
 namespace RainOverhaul.Content {
     
     // Audio replace (Rain World mode only)
-    // public class aQuakeSound:ModBiome {
-    //     public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
-    //     public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sQuake");
-
-    //     public override bool IsBiomeActive(Player player) {
-    //         if(RainSystem.CycleState == quake) {
-    //             return true;
-    //         } else return false;
-    //     }
-    // }
     public class aRainSound:ModBiome {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sRain");

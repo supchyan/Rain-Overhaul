@@ -117,7 +117,8 @@ namespace RainOverhaul.Content {
                     case CycleClear: {
                         Main.raining = false;
 
-                        if(CycleQuakeImpulse > 0f) CycleQuakeImpulse -= 0.05f;
+                        if(CycleQuakeImpulse < -10f) CycleQuakeImpulse = 5.07f;
+                        else if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -= 0.1f;
                         else CycleQuakeImpulse = 0f;
 
                         if(CycleRainForce > 0f) CycleRainForce -= 0.01f;
@@ -165,17 +166,24 @@ namespace RainOverhaul.Content {
 
                         if(CommonCondition) { // if player is somewhere where is vanilla raining
                             if(!PlayerInSafePlace) {
-                                if(CycleQuakeImpulse != 5.07f) CycleQuakeImpulse = 5.07f;
+                                if(CycleQuakeImpulse < -10f) CycleQuakeImpulse = 5.07f;
+                                else if(CycleQuakeImpulse < 5.07f) CycleQuakeImpulse += 0.1f;
+                                else CycleQuakeImpulse -= 0.1f;
+
                                 if(CycleRainForce < 1.0f) CycleRainForce += 0.01f;
 
                             } else {
-                                if(CycleQuakeImpulse < 1.07f) CycleQuakeImpulse += 0.1f;
+                                if(CycleQuakeImpulse < -10f) CycleQuakeImpulse = 5.07f;
+                                else if(CycleQuakeImpulse < 1.07f) CycleQuakeImpulse += 0.1f;
                                 else CycleQuakeImpulse -= 0.1f;
                                 
                                 if(CycleRainForce > 0.0f) CycleRainForce -= 0.01f;
                             }
                         } else {
-                            if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -= 0.1f;
+                            if(CycleQuakeImpulse < -10f) CycleQuakeImpulse = 5.07f;
+                            else if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -= 0.1f;
+                            else CycleQuakeImpulse = 0f;
+
                             if(CycleRainForce > 0.0f) CycleRainForce -= 0.01f;
                         }
 
