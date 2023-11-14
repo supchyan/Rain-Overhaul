@@ -113,14 +113,14 @@ namespace RainOverhaul.Content {
                 Filters.Scene["RainFilter"].GetShader().UseOpacity(CycleRainForce * 0.1f).UseIntensity(CycleRainForce).UseProgress(-Main.windSpeedCurrent*4.0f);
                 Filters.Scene["RainShake"].GetShader().UseOpacity(CycleQuakeImpulse).UseIntensity(3.7f);
 
-                bool RainWorldCondition = (Main.LocalPlayer.ZoneRain || Main.LocalPlayer.ZoneForest || Main.LocalPlayer.ZoneJungle || Main.LocalPlayer.ZoneDesert || Main.LocalPlayer.ZoneCrimson || Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneBeach || Main.LocalPlayer.ZoneHallow || Main.LocalPlayer.ZoneMeteor) && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
-
                 // Custom rain behavior when in "RainWorld" mode
                 switch(CycleState) {
                     case CycleClear: {
                         Main.raining = false;
 
                         if(CycleQuakeImpulse > 0f) CycleQuakeImpulse -= 0.05f;
+                        else CycleQuakeImpulse = 0f;
+
                         if(CycleRainForce > 0f) CycleRainForce -= 0.01f;
 
                         if(Main.maxRaining != 0f) Main.maxRaining = 0f;
@@ -140,8 +140,14 @@ namespace RainOverhaul.Content {
 
                         CycleQuakeStrength = 1f + (float)(Main.time - CycleClearTimeEnd) / (float)(Main.dayLength - CycleClearTimeEnd);
                         
-                        if(RainWorldCondition) CycleQuakeImpulse = ((float)Math.Sin(MathHelper.ToRadians((float)(Main.time - CycleClearTimeEnd) / 2f))) * CycleQuakeStrength;
-                        else { if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -= 0.1f; } // if player left certain biome, stop the quake
+                        if(!Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow) {
+                            CycleQuakeImpulse = ((float)Math.Sin(MathHelper.ToRadians((float)(Main.time - CycleClearTimeEnd) / 2f))) * CycleQuakeStrength;
+                        
+                        } else { // if player left certain biome, stop the quake
+                            if(CycleQuakeImpulse > 0.0f) CycleQuakeImpulse -= 0.1f;
+                            else CycleQuakeImpulse = 0f;
+                        } 
+                        
                         if(CycleRainForce > 0.0f) CycleRainForce -= 0.01f;
                         if(Main.maxRaining != 0f) Main.maxRaining = 0f;
 
@@ -158,7 +164,7 @@ namespace RainOverhaul.Content {
                     case CycleRain: {
                         if (!Main.raining) Main.StartRain();
 
-                        if(RainWorldCondition) {
+                        if(CommonCondition) {
                             if(!PlayerInSafePlace) {
                                 if(CycleQuakeImpulse != 5.07f) CycleQuakeImpulse = 5.07f;
                                 if(CycleRainForce < 1.0f) CycleRainForce += 0.01f;
