@@ -25,7 +25,6 @@ namespace RainOverhaul.Content {
     }
     public sealed class aRainSoundRegister:ILoadable {
 		public void Load(Mod mod) {
-            MusicLoader.AddMusic(mod, "Content/Sounds/sQuake");
 			MusicLoader.AddMusic(mod, "Content/Sounds/sRain");
             MusicLoader.AddMusic(mod, "Content/Sounds/sDimRain");
         }
