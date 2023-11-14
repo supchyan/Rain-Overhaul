@@ -36,8 +36,6 @@ namespace RainOverhaul.Content {
             Append(Container);
         }
         public override void Update(GameTime gameTime) {
-			LocalTimeForAnimation++;
-			
             float xPos = Main.screenWidth * ModContent.GetInstance<RainConfig>().cCycleIndicatorPos.X;
             float yPos = Main.screenHeight * ModContent.GetInstance<RainConfig>().cCycleIndicatorPos.Y;
             float IconWidth = 64f;
@@ -60,7 +58,7 @@ namespace RainOverhaul.Content {
 
 			float e = 2.71828f;
 			float IconScale = 0.7f + LocalTimeForAnimation/960f;
-			Color IconOpacity = Color.White*(1f/(float)Math.Pow(LocalTimeForAnimation/40f, e));
+			Color IconOpacity = Color.White*((float)Math.Pow(1f/(LocalTimeForAnimation/40f), e));
 
 			switch (RainSystem.CycleState) { 
 				case RainSystem.CycleClear: {
