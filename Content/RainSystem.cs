@@ -140,7 +140,7 @@ namespace RainOverhaul.Content {
 
                         CycleQuakeStrength = 1f + (float)(Main.time - CycleClearTimeEnd) / (float)(Main.dayLength - CycleClearTimeEnd);
                         
-                        if(!Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow) {
+                        if(!Main.LocalPlayer.ZoneUnderworldHeight && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow) {
                             CycleQuakeImpulse = ((float)Math.Sin(MathHelper.ToRadians((float)(Main.time - CycleClearTimeEnd) / 2f))) * CycleQuakeStrength;
                         
                         } else { // if player left certain biome, stop the quake
@@ -164,7 +164,7 @@ namespace RainOverhaul.Content {
                     case CycleRain: {
                         if (!Main.raining) Main.StartRain();
 
-                        if(CommonCondition) {
+                        if(CommonCondition) { // if player is somewhere where is vanilla rainining
                             if(!PlayerInSafePlace) {
                                 if(CycleQuakeImpulse != 5.07f) CycleQuakeImpulse = 5.07f;
                                 if(CycleRainForce < 1.0f) CycleRainForce += 0.01f;
