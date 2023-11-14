@@ -30,14 +30,4 @@ namespace RainOverhaul.Content {
         [DefaultValue(false)]
         public bool cRainWorld;
     }
-    public class RainConfigDev:ModConfig {
-        public override ConfigScope Mode => ConfigScope.ClientSide;
-
-        [BackgroundColor(0, 0, 0)]
-        public NPCDefinition npcDefinitionExample = new NPCDefinition(NPCID.Bunny);
-
-        [Header("WeatherSettings")]
-        public bool cStartRain;
-        public bool cStopRain;
-    }
 }

@@ -49,18 +49,6 @@ namespace RainOverhaul.Content {
 
         // Rain logic
         public override void PostUpdateTime() {
-            // Main.NewText(Main.windSpeedCurrent);
-
-            // Affects vanilla rain state in game
-            if(ModContent.GetInstance<RainConfigDev>().cStartRain) {
-                Main.StartRain();
-                ModContent.GetInstance<RainConfigDev>().cStartRain = false;
-            }
-            if(ModContent.GetInstance<RainConfigDev>().cStopRain) {
-                Main.StopRain();
-                ModContent.GetInstance<RainConfigDev>().cStopRain = false;
-            }
-            
             // Sync rain with server all time 
             Main.SyncRain();
 

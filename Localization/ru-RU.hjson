@@ -45,27 +45,6 @@ Mods: {
 						'''
 				}
 			}
-
-			RainConfigDev: {
-				// DisplayName: Rain Config Dev
-
-				npcDefinitionExample: {
-					// Label: What are you doing here?
-					// Tooltip: ""
-				}
-
-				// Headers.WeatherSettings: Weather Settings
-
-				cStartRain: {
-					// Label: Start Rain
-					// Tooltip: Generates rain for debugging
-				}
-
-				cStopRain: {
-					// Label: Stop Rain
-					// Tooltip: Stops rain for debugging
-				}
-			}
 		}
 
 		RainDeathReason: помер(-ла) в связи с погодными условиями.
@@ -82,8 +61,8 @@ Mods: {
 			}
 
 			aQuakeSound: {
-				// DisplayName: a Quake Sound
-				// TownNPCDialogueName: the a Quake Sound
+				DisplayName: ""
+				TownNPCDialogueName: ""
 			}
 		}
 
@@ -92,11 +71,6 @@ Mods: {
 				Description: Дождь слишком тяжелый! Скорее найдите убежище, чтобы предотвратить неминуемое!
 				DisplayName: Кажется дождь начинается?
 			}
-		}
-
-		Projectiles: {
-			RainCircle.DisplayName: Сфера дождя
-			// RainBubble.DisplayName: Rain Bubble
 		}
 	}
 }

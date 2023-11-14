@@ -44,27 +44,6 @@ Mods: {
 						'''
 				}
 			}
-
-			RainConfigDev: {
-				DisplayName: Rain Config Dev
-
-				npcDefinitionExample: {
-					Label: What are you doing here?
-					Tooltip: ""
-				}
-
-				Headers.WeatherSettings: Weather Settings
-
-				cStartRain: {
-					Label: Start Rain
-					Tooltip: Generates rain for debugging
-				}
-
-				cStopRain: {
-					Label: Stop Rain
-					Tooltip: Stops rain for debugging
-				}
-			}
 		}
 
 		RainDeathReason: died by virtue of the nature forces.
@@ -81,8 +60,8 @@ Mods: {
 			}
 
 			aQuakeSound: {
-				DisplayName: a Quake Sound
-				TownNPCDialogueName: the a Quake Sound
+				DisplayName: ""
+				TownNPCDialogueName: ""
 			}
 		}
 
@@ -91,11 +70,6 @@ Mods: {
 				Description: The rain is too heavy! Find shelter quickly to prevent the inevitable!
 				DisplayName: It's raining somewhere else?
 			}
-		}
-
-		Projectiles: {
-			RainCircle.DisplayName: Rain Circle
-			RainBubble.DisplayName: Rain Bubble
 		}
 	}
 }
