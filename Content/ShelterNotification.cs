@@ -7,7 +7,7 @@ using ReLogic.Utilities;
 namespace RainOverhaul.Content {
     public class ShelterNotification:ModBuff {
         
-        // Buff notification and heavy rain's consequences
+        // Buff notification and "heavy rain's" consequences
         public override string Texture => "RainOverhaul/Content/Textures/ShelterIcon";
         public override void SetStaticDefaults() {
             Main.buffNoTimeDisplay[Type] = true;

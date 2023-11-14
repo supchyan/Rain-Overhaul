@@ -17,7 +17,7 @@ namespace RainOverhaul.Content {
     //     public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/sQuake");
 
     //     public override bool IsBiomeActive(Player player) {
-    //         if(RainSystem.QuakeSoundCondition) {
+    //         if(RainSystem.CycleState == quake) {
     //             return true;
     //         } else return false;
     //     }

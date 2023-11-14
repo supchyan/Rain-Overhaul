@@ -26,7 +26,7 @@ float4 RainShake(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, uv);
     return color;
 }
-technique Technique2 {
+technique ShakeTechnique {
     pass RainShake {
         PixelShader = compile ps_2_0 RainShake();
     }

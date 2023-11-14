@@ -10,7 +10,8 @@ namespace RainOverhaul.Content {
     public class UnderRainPlayer:ModPlayer {
         private SoundStyle sDeath = new SoundStyle("RainOverhaul/Content/Sounds/sDeath");
         public SlotId TUUM;
-        // Damage control of Players under the rain 
+
+        // Damage control of the players under the rain 
         public override void UpdateBadLifeRegen() {
             float rIntensity = 550*Main.maxRaining/(20.0f * 645.0f)*2.5f;
             int fValue = (int)Math.Round(rIntensity*20);
@@ -24,7 +25,6 @@ namespace RainOverhaul.Content {
         }
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
             TUUM = SoundEngine.PlaySound(sDeath with {Volume=1.2f,MaxInstances=3,SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest}, Player.Center);
-            // damageSource = PlayerDeathReason.ByCustomReason(Player.name + " " + Language.GetTextValue("Mods.RainOverhaul.RainDeathReason"));
         }
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
 			ModPacket packet = Mod.GetPacket();

@@ -36,14 +36,8 @@ namespace RainOverhaul.Content {
         [BackgroundColor(0, 0, 0)]
         public NPCDefinition npcDefinitionExample = new NPCDefinition(NPCID.Bunny);
 
-
-        [Header("RemoveItLater")]
-        [Range(-10f, 10f)]
-        public float cShaderMUL;
-
         [Header("WeatherSettings")]
         public bool cStartRain;
-
         public bool cStopRain;
     }
 }

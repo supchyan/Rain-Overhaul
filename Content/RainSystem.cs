@@ -37,12 +37,12 @@ namespace RainOverhaul.Content {
         public const int CycleQuake = 1;
         public const int CycleRain = 2; 
 
-        // yes, description is correct, 'cause of switch loop in code below vvv
-        public const int CycleClearTimeEnd = 51700; // time when quake starts 
-        public const int CycleQuakeTimeEnd = 53999; // time when rain starts 
-        public const int CycleRainTimeEnd = 16200; // time when clear starts
+        // Game time's pick states for "RainWorld" mode
+        public const int CycleClearTimeEnd = 51700; // time when quake cycle starts 
+        public const int CycleQuakeTimeEnd = 53999; // time when rain cycle starts 
+        public const int CycleRainTimeEnd = 16200; // time when clear cycle starts
 
-        public static int CycleState; // (clear / quake / raining) check consts above ^^^
+        public static int CycleState; // (clear / quake / raining) check consts above ^
         public float CycleRainForce;
         public float CycleQuakeStrength;
         public float CycleQuakeImpulse;
@@ -66,8 +66,7 @@ namespace RainOverhaul.Content {
 
             Filters.Scene.Activate("RainFilter"); 
             Filters.Scene.Activate("RainShake");
-
-            // old stuff, but returns true, when player overlaps (collides) the wall vvv
+            // Returns true, when player overlaps (collides) the wall v
             // Tile tTile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             // bool WallCollision = tTile.WallType > WallID.None;
             
@@ -83,7 +82,7 @@ namespace RainOverhaul.Content {
             }
 
             bool CommonCondition = Main.LocalPlayer.ZoneRain && !Main.LocalPlayer.ZoneNormalSpace && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow;
-            bool RainCondition = !PlayerInSafePlace && CommonCondition;            
+            bool RainCondition = !PlayerInSafePlace && CommonCondition;
 
             if(Main.LocalPlayer.ZoneBeach||Main.LocalPlayer.ZoneJungle) Extra = 1.4f;
             else Extra = 1f;
@@ -98,10 +97,8 @@ namespace RainOverhaul.Content {
             Intensity = 550*OldMaxRaining/(20.0f * 645.0f)*ModContent.GetInstance<RainConfig>().cIntensity;
             HardIntensity = 550*OldMaxRaining/(20.0f * 645.0f)*2.5f;
 
-            // Filters.Scene["RainShake"].GetShader().UseOpacity(ShakeTransition*1.07f).UseIntensity(3.7f);
-
             if(!ModContent.GetInstance<RainConfigServer>().cRainWorld) {
-                // null custom rain behavior
+                // Nulling custom rain behavior
                 CycleState = CycleClear;
                 
                 if(RainCondition) {
@@ -115,7 +112,7 @@ namespace RainOverhaul.Content {
                 Filters.Scene["RainShake"].GetShader().UseOpacity(0f).UseIntensity(0f);
                 
             } else {
-                // this controls sound effects to a rain system
+                // This controls sound effects in the rain system
                 QuakeSoundCondition = CycleState == CycleQuake;
                 RainSoundCondition = CommonCondition;
                 DimRainSoundCondition = CommonCondition && PlayerInSafePlace;
@@ -140,7 +137,7 @@ namespace RainOverhaul.Content {
 
                         if(Main.maxRaining != 0f) Main.maxRaining = 0f;
 
-                        // cycle state swap
+                        // Cycle state swap
                         if(Main.time >= CycleClearTimeEnd && Main.IsItDay()) {
                             CycleState = CycleQuake;
                         }
@@ -160,7 +157,7 @@ namespace RainOverhaul.Content {
                         if(CycleRainForce > 0.0f) CycleRainForce -= 0.01f;
                         if(Main.maxRaining != 0f) Main.maxRaining = 0f;
 
-                        // cycle state swap
+                        // Cycle state swap
                         if((Main.time < CycleClearTimeEnd && Main.IsItDay()) || (Main.time >= CycleRainTimeEnd && !Main.IsItDay())) {
                             CycleState = CycleClear;
                         }
@@ -191,7 +188,7 @@ namespace RainOverhaul.Content {
 
                         if(Main.maxRaining != 0.97f) Main.maxRaining = 0.97f;
 
-                        // cycle state swap
+                        // Cycle state swap
                         if((Main.time >= CycleRainTimeEnd && !Main.IsItDay()) || (Main.time < CycleClearTimeEnd && Main.IsItDay())) {
                             CycleState = CycleClear;
                         }
@@ -201,15 +198,6 @@ namespace RainOverhaul.Content {
 
                     } break;
                 }
-
-                // drawing circle with shader from above comment
-                // for(int i=0; i<Main.maxNPCs; i++) {
-                //     if(!Main.LocalPlayer.HasBuff<ShelterNotification>() && Main.npc[i].active && Main.npc[i].HasBuff<ShelterNotification>()) {
-                //         Projectile.NewProjectile(Entity.GetSource_None(), Main.npc[i].Center, Main.npc[i].velocity, ModContent.ProjectileType<RainBubble>(), 0, 0, Main.LocalPlayer.whoAmI);
-                //     }
-                // }
-                
-                         
             }
         }
     }

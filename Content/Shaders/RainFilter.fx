@@ -42,7 +42,7 @@ float4 RainFilter(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 
     return rain;
 }
-technique Technique1 {
+technique RainTechnique {
     pass RainFilter {
         PixelShader = compile ps_2_0 RainFilter();
     }

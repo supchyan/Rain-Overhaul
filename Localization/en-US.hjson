@@ -53,16 +53,7 @@ Mods: {
 					Tooltip: ""
 				}
 
-				Headers: {
-					TestFeatures: Test Features
-					RemoveItLater: Remove It Later
-					WeatherSettings: Weather Settings
-				}
-
-				cShaderMUL: {
-					Tooltip: ""
-					Label: Shader multiplier
-				}
+				Headers.WeatherSettings: Weather Settings
 
 				cStartRain: {
 					Label: Start Rain
