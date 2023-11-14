@@ -164,7 +164,7 @@ namespace RainOverhaul.Content {
                     case CycleRain: {
                         if (!Main.raining) Main.StartRain();
 
-                        if(CommonCondition) { // if player is somewhere where is vanilla rainining
+                        if(CommonCondition) { // if player is somewhere where is vanilla raining
                             if(!PlayerInSafePlace) {
                                 if(CycleQuakeImpulse != 5.07f) CycleQuakeImpulse = 5.07f;
                                 if(CycleRainForce < 1.0f) CycleRainForce += 0.01f;
